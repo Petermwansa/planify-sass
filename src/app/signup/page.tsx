@@ -15,8 +15,8 @@ export default function SignupPage() {
           <h1 className="text-xl">Create an Account</h1>
           <p className="text-black">Sign up and get a 14-day free trial</p>
         </div>
-        <form className="bg-[#f0f8ff] rounded-[20px] p-5 max-w-[600px] mx-auto">
-          <div>
+        <form className=" sign-form bg-[#aad5fb] ounded-[50px] p-5 max-w-[600px] mx-auto ">
+          <div className="input-group">
             <label htmlFor="email" className="block text-sm font-medium">
               Name
             </label>{" "}
@@ -27,7 +27,7 @@ export default function SignupPage() {
               required
             />
           </div>
-          <div>
+          <div className="input-group">
             <label htmlFor="email" className="block text-sm font-medium">
               Email
             </label>{" "}
@@ -38,7 +38,7 @@ export default function SignupPage() {
               required
             />
           </div>
-          <div>
+          <div className="input-group">
             <label htmlFor="passowrd" className="block text-sm font-medium">
               Password
             </label>{" "}
@@ -49,7 +49,7 @@ export default function SignupPage() {
               required
             />
           </div>
-          <div>
+          <div className="input-group">
             <label
               htmlFor="repeatpassword"
               className="block text-sm font-medium"
