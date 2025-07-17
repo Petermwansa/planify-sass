@@ -4,6 +4,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #38827e;
+  --secondary: #f1fffe;
+  --dark: #000000;
+  --tertiary: rgb(0, 85, 255);
 }
 
 @theme inline {
@@ -24,6 +28,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.logo {
+  color: #000000;
+  font-size: 3rem;
+  margin: 1rem;
 }
 
 .custom-top-right-rounded {
@@ -73,12 +83,11 @@ body {
 .input-group {
   margin: 1rem auto;
 }
-
 .input-group input {
   background-color: white;
   border-radius: 20px;
-  margin-top: .5rem;
-  padding: .5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
 }
 
 .create-socials {
@@ -99,4 +108,103 @@ body {
   display: flex;
   flex-direction: row;
   gap: 6rem;
+}
+
+.sidebar {
+  background-color: #38827e;
+}
+
+.sidebar-profile {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+}
+
+.sidebar-name {
+  margin: 0.5rem auto;
+  font-size: 1rem;
+  color: var(--secondary);
+}
+
+.sidebar-generate {
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.upgrade {
+  position: absolute;
+  bottom: 0;
+  margin: 3rem;
+}
+
+.start {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+.start-name {
+  font-size: 5rem;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-p {
+  font-size: 1rem;
+  color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.generate-btn {
+  width: 120px;
+  padding: 0.6rem;
+  background-color: var(--secondary);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  color: var(--primary);
+  cursor: pointer;
+  transition: 1s all ease-in-out;
+}
+
+.generate-btn:hover {
+  background-color: var(--primary);
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
+}
+
+.upgrade-btn {
+  width: 150px;
+  padding: 0.8rem;
+  background-color: var(--tertiary);
+  border: 1px solid var(--secondary);
+  border-radius: 20px;
+  color: var(--secondary);
+  cursor: pointer;
+  transition: 1s all ease-in-out;
+}
+
+.upgrade-btn:hover {
+  background-color: var(--primary);
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
 }
