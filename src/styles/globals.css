@@ -145,7 +145,28 @@ body {
   align-items: center;
 }
 
+.sidebar-nav {
+  color: var(--secondary);
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.sidebar-link {
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+}
+
+.navbar-settings {
+  margin-top: 10rem;
+}
+
 .upgrade {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 0;
   margin: 3rem;
@@ -183,7 +204,7 @@ body {
   border-radius: 20px;
   color: var(--primary);
   cursor: pointer;
-  transition: 1s all ease-in-out;
+  transition: .5s all ease-in-out;
 }
 
 .generate-btn:hover {
@@ -200,7 +221,7 @@ body {
   border-radius: 20px;
   color: var(--secondary);
   cursor: pointer;
-  transition: 1s all ease-in-out;
+  transition: .5s all ease-in-out;
 }
 
 .upgrade-btn:hover {

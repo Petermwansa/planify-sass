@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-function GenerateBtn() {
+interface GenerateBtnProps {
+  onClick: () => void;
+}
+
+function GenerateBtn({ onClick}: GenerateBtnProps) {
   return (
-    <button className='generate-btn'>
+    <button className='generate-btn' onClick={onClick}>
      + New Idea
     </button>
   )
