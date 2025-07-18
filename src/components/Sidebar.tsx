@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveView }) => {
         <h1 className="sidebar-name">{name}</h1>
       </div>
       <div className="sidebar-generate">
-        <GenerateBtn onClick={() => setActiveView("subscription")}/>
+        <GenerateBtn />
       </div>
       <nav className="sidebar-nav">
         <button onClick={() => setActiveView("start")} className="sidebar-link">
@@ -104,7 +104,7 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveView }) => {
         </button>
       </nav>
       <div className="upgrade">
-        <UpgradeBtn />
+        <UpgradeBtn  onClick={() => setActiveView("subscription")}/>
       </div>
     </div>
   );
