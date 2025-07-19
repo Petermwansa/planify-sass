@@ -229,3 +229,16 @@ body {
   border: 1px solid var(--secondary);
   color: var(--secondary);
 }
+
+
+
+/* ============ FOR THE MULTISTEP FORM ============  */
+
+.multi-step-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* Center vertically */
+  align-items: center;       /* Center horizontally */
+  height: 100vh;             /* Full screen height */
+  width: 100vw;   
+}

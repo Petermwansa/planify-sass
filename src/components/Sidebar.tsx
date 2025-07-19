@@ -1,6 +1,7 @@
 import GenerateBtn from "@/app/UI/Button/GenerateBtn";
 import UpgradeBtn from "@/app/UI/Button/Upgrade";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface SidebarProps {
@@ -23,7 +24,9 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveView }) => {
         <h1 className="sidebar-name">{name}</h1>
       </div>
       <div className="sidebar-generate">
-        <GenerateBtn />
+      <Link href={"/dashboard/multistepform"} className="generate-btn">
+        + New Idea
+      </Link>
       </div>
       <nav className="sidebar-nav">
         <button onClick={() => setActiveView("start")} className="sidebar-link">

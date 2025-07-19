@@ -7,6 +7,7 @@ import ContentIdeas from "@/components/ContentIdeas";
 import Settings from "@/components/Settings";
 import SavedIdeas from "@/components/SavedIdeas";
 import SubscriptionPlans from "@/components/SubscriptionPlans";
+import MultiStepForm from "@/components/MultiStepForm";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
@@ -23,7 +24,9 @@ const Dashboard = () => {
         return <Settings />;
       case "subscription":
         return <SubscriptionPlans />;
-      case "start":
+      case "newIdea":
+        return <MultiStepForm />
+      case "newIdea":
       default:
         return <Start />;
     }
@@ -34,6 +37,7 @@ const Dashboard = () => {
       <Sidebar setActiveView={setActiveView} />
       <main className="flex-1 overflow-y-auto p-8 bg-gray-100">
         <h1 className="logo">Planify.Ai</h1>
+
         <div className="start">{renderView()}</div>
       </main>
     </div>
