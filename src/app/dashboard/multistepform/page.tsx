@@ -18,9 +18,11 @@ const MultiStepForm = () => {
     platform: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const nextStep = () => setStep(step + 1);
@@ -40,75 +42,89 @@ const MultiStepForm = () => {
   };
 
   return (
-    <div className="">
+    <div className="multi-step-form">
       {step === 1 && (
-        <>
-          <h2 className="text-xl font-semibold mb-4">Step 1: Idea Basics</h2>
+        <div className="entry">
+          <h2 className="entry_title">Enter a Topic / Niche</h2>
           <input
             name="topic"
             value={formData.topic}
             onChange={handleChange}
             placeholder="Idea Title"
-            className="w-full mb-3 p-2 border rounded"
+            className="entry_input"
           />
+          <button onClick={nextStep} className="entry_button">
+            Next
+          </button>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div className="entry">
+          <h2 className="entry_title">Enter a Category</h2>
           <input
             name="category"
             value={formData.category}
             onChange={handleChange}
             placeholder="Category (e.g., Growth, Tips)"
-            className="w-full mb-3 p-2 border rounded"
+            className="entry_input"
           />
-          <button onClick={nextStep} className="bg-blue-600 text-white px-4 py-2 rounded">
-            Next
-          </button>
-        </>
+          <div className="entry_button_group">
+            <button onClick={prevStep} className="entry_button">
+              Back
+            </button>
+            <button className="entry_button" onClick={nextStep}>
+              Next
+            </button>
+          </div>
+        </div>
       )}
 
-      {step === 2 && (
-        <>
-          <h2 className="text-xl font-semibold mb-4">Step 2: Description</h2>
+      {step === 3 && (
+        <div className="entry">
+          <h2 className="entry_title">Enter the Description</h2>
           <input
             name="description"
             value={formData.description}
             onChange={handleChange}
             placeholder="Short Description"
-            className="w-full mb-3 p-2 border rounded"
+            className="entry_input"
           />
           <div className="flex justify-between">
-            <button onClick={prevStep} className="px-4 py-2 border rounded">
+            <button onClick={prevStep} className="entry_button">
               Back
             </button>
-            <button onClick={nextStep} className="bg-blue-600 text-white px-4 py-2 rounded">
+            <button onClick={nextStep} className="entry_button">
               Next
             </button>
           </div>
-        </>
+        </div>
       )}
 
-      {step === 3 && (
-        <>
-          <h2 className="text-xl font-semibold mb-4">Step 3: Platform</h2>
+      {step === 4 && (
+        <div className="entry">
+          <h2 className="entry_title">Choose the Platform</h2>
           <select
             name="platform"
             value={formData.platform}
             onChange={handleChange}
-            className="w-full mb-3 p-2 border rounded"
+            className="entry_input"
           >
             <option value="">Choose Platform</option>
             <option value="Instagram">Instagram</option>
             <option value="YouTube">YouTube</option>
             <option value="TikTok">TikTok</option>
-            <option value="TikTok">FaceBook</option>
+            <option value="Facebook">FaceBook</option>
           </select>
-          <div className="flex justify-between">
-            <button onClick={prevStep} className="px-4 py-2 border rounded">
+          <div className="entry_button_group">
+            <button onClick={prevStep} className="entry_button">
               Back
             </button>
-            <button onClick={handleSubmit} className="bg-green-600 text-white px-4 py-2 rounded">
+            <button onClick={handleSubmit} className="entry_button">
               Submit
             </button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

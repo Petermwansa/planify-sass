@@ -39,7 +39,7 @@ const MultiStepForm = () => {
 
 
   return (
-    <div className="bg-white p-6 rounded shadow-md max-w-md mx-auto">
+    <div className="bg-black p-6 rounded shadow-md max-w-md mx-auto">
       {step === 1 && (
         <>
           <h2 className="text-xl font-semibold mb-4">Step 1: Idea Basics</h2>
