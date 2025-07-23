@@ -7,7 +7,8 @@ export const dummyIdeas = [
     hashtags: ["#contentcreator", "#consistency", "#instagramtips"],
     goal: "Stay consistent",
     type: "Carousel",
-    createdAt: "2025-07-17T08:00:00Z"
+    createdAt: "2025-07-17T08:00:00Z",
+    saved: false, // <-- added field
   },
   {
     id: 2,
@@ -17,7 +18,8 @@ export const dummyIdeas = [
     hashtags: ["#tiktoktips", "#viralvideo", "#hookstrategy"],
     goal: "Increase views",
     type: "Video",
-    createdAt: "2025-07-17T08:30:00Z"
+    createdAt: "2025-07-17T08:30:00Z",
+    saved: false, // <-- added field
   },
   {
     id: 3,
@@ -27,7 +29,8 @@ export const dummyIdeas = [
     hashtags: ["#buildinpublic", "#contentstrategy", "#linkedincreator"],
     goal: "Build trust",
     type: "Text Post",
-    createdAt: "2025-07-17T09:00:00Z"
+    createdAt: "2025-07-17T09:00:00Z",
+    saved: true, // <-- added field
   },
   {
     id: 4,
@@ -37,7 +40,7 @@ export const dummyIdeas = [
     hashtags: ["#hook", "#tweettips", "#audiencegrowth"],
     goal: "Boost engagement",
     type: "Thread",
-    createdAt: "2025-07-17T09:30:00Z"
+    createdAt: "2025-07-17T09:30:00Z",
   },
   {
     id: 5,
@@ -47,9 +50,10 @@ export const dummyIdeas = [
     hashtags: ["#reels", "#contentideas", "#socialmediatips"],
     goal: "Improve retention",
     type: "Reel",
-    createdAt: "2025-07-17T10:00:00Z"
+    createdAt: "2025-07-17T10:00:00Z",
+    saved: true, // <-- added field
   },
- {
+  {
     id: 6,
     hook: "Struggling to stay consistent with content?",
     idea: "Use the 3x3 method: Pick 3 themes and rotate them weekly to avoid burnout.",
@@ -57,7 +61,8 @@ export const dummyIdeas = [
     hashtags: ["#contentcreator", "#consistency", "#instagramtips"],
     goal: "Stay consistent",
     type: "Carousel",
-    createdAt: "2025-07-17T08:00:00Z"
+    createdAt: "2025-07-17T08:00:00Z",
+    saved: false, // <-- added field
   },
   {
     id: 7,
@@ -67,7 +72,8 @@ export const dummyIdeas = [
     hashtags: ["#tiktoktips", "#viralvideo", "#hookstrategy"],
     goal: "Increase views",
     type: "Video",
-    createdAt: "2025-07-17T08:30:00Z"
+    createdAt: "2025-07-17T08:30:00Z",
+    saved: false, // <-- added field
   },
   {
     id: 8,
@@ -77,7 +83,8 @@ export const dummyIdeas = [
     hashtags: ["#buildinpublic", "#contentstrategy", "#linkedincreator"],
     goal: "Build trust",
     type: "Text Post",
-    createdAt: "2025-07-17T09:00:00Z"
+    createdAt: "2025-07-17T09:00:00Z",
+    saved: false, // <-- added field
   },
   {
     id: 9,
@@ -87,7 +94,8 @@ export const dummyIdeas = [
     hashtags: ["#hook", "#tweettips", "#audiencegrowth"],
     goal: "Boost engagement",
     type: "Thread",
-    createdAt: "2025-07-17T09:30:00Z"
+    createdAt: "2025-07-17T09:30:00Z",
+    saved: true, // <-- added field
   },
   {
     id: 10,
@@ -97,9 +105,10 @@ export const dummyIdeas = [
     hashtags: ["#reels", "#contentideas", "#socialmediatips"],
     goal: "Improve retention",
     type: "Reel",
-    createdAt: "2025-07-17T10:00:00Z"
+    createdAt: "2025-07-17T10:00:00Z",
+    saved: false, // <-- added field
   },
- {
+  {
     id: 11,
     hook: "Struggling to stay consistent with content?",
     idea: "Use the 3x3 method: Pick 3 themes and rotate them weekly to avoid burnout.",
@@ -107,7 +116,8 @@ export const dummyIdeas = [
     hashtags: ["#contentcreator", "#consistency", "#instagramtips"],
     goal: "Stay consistent",
     type: "Carousel",
-    createdAt: "2025-07-17T08:00:00Z"
+    createdAt: "2025-07-17T08:00:00Z",
+    saved: true, // <-- added field
   },
   {
     id: 12,
@@ -117,7 +127,8 @@ export const dummyIdeas = [
     hashtags: ["#tiktoktips", "#viralvideo", "#hookstrategy"],
     goal: "Increase views",
     type: "Video",
-    createdAt: "2025-07-17T08:30:00Z"
+    createdAt: "2025-07-17T08:30:00Z",
+    saved: false, // <-- added field
   },
   {
     id: 13,
@@ -127,7 +138,8 @@ export const dummyIdeas = [
     hashtags: ["#buildinpublic", "#contentstrategy", "#linkedincreator"],
     goal: "Build trust",
     type: "Text Post",
-    createdAt: "2025-07-17T09:00:00Z"
+    createdAt: "2025-07-17T09:00:00Z",
+    saved: false, // <-- added field
   },
   {
     id: 14,
@@ -137,7 +149,8 @@ export const dummyIdeas = [
     hashtags: ["#hook", "#tweettips", "#audiencegrowth"],
     goal: "Boost engagement",
     type: "Thread",
-    createdAt: "2025-07-17T09:30:00Z"
+    createdAt: "2025-07-17T09:30:00Z",
+    saved: false, // <-- added field
   },
   {
     id: 15,
@@ -147,6 +160,7 @@ export const dummyIdeas = [
     hashtags: ["#reels", "#contentideas", "#socialmediatips"],
     goal: "Improve retention",
     type: "Reel",
-    createdAt: "2025-07-17T10:00:00Z"
-  }
+    createdAt: "2025-07-17T10:00:00Z",
+    saved: false, // <-- added field
+  },
 ];

@@ -5,9 +5,9 @@ import Sidebar from "@/components/Sidebar";
 import Start from "@/components/Start";
 import ContentIdeas from "@/components/ContentIdeas";
 import Settings from "@/components/Settings";
-import SavedIdeas from "@/components/SavedIdeas";
 import SubscriptionPlans from "@/components/SubscriptionPlans";
 import MultiStepForm from "@/components/MultiStepForm";
+import SavedIdeasPage from "../saved/page";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
@@ -17,7 +17,7 @@ const Dashboard = () => {
       case "ideas":
         return <ContentIdeas />;
       case "saved":
-        return <SavedIdeas />;
+        return <SavedIdeasPage />;
       case "search":
         return <Settings />;
       case "settings":
