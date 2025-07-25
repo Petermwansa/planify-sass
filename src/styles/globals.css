@@ -433,3 +433,40 @@ hr {
 .input_field button {
   cursor: pointer;
 }
+
+.usage {
+  width: 50%;
+  margin: 10rem;
+  color: var(--dark);
+}
+
+.usage_text {
+  font-weight: 900;
+  margin-bottom: 2rem;
+}
+
+.usage_text_bottom {
+  margin-top: 5rem;
+  font-weight: 900;
+}
+
+.progress {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.progress_bar_container {
+  width: 100%; /* w-full */
+  background-color: #d1d5db; /* bg-gray-300 */
+  border-radius: 9999px; /* rounded-full */
+  height: 3rem; /* h-4 => 16px */
+  overflow: hidden; /* overflow-hidden */
+}
+
+.progress_bar_inner {
+  background-color: var(--primary); /* bg-blue-600 */
+  height: 100%; /* h-full      */
+  transition: all 300ms ease-in-out; /* transition‑all duration‑300 ease‑in‑out */
+}
