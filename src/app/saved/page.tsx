@@ -6,6 +6,7 @@ import { dummyIdeas } from "@/data/dummyIdeas";
 import { Idea } from "@/types/Idea";
 import SavedIdeasOnly from "@/components/SavedIdeas";
 
+
 const SavedIdeasPage = () => {
   const [ideas, setIdeas] = useState<Idea[]>(dummyIdeas);
 
@@ -26,3 +27,6 @@ const SavedIdeasPage = () => {
 };
 
 export default SavedIdeasPage;
+
+
+

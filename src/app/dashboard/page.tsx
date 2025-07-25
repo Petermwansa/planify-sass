@@ -6,8 +6,8 @@ import Start from "@/components/Start";
 import ContentIdeas from "@/components/ContentIdeas";
 import Settings from "@/components/Settings";
 import SubscriptionPlans from "@/components/SubscriptionPlans";
-import MultiStepForm from "@/components/MultiStepForm";
 import SavedIdeasPage from "../saved/page";
+
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
@@ -18,15 +18,10 @@ const Dashboard = () => {
         return <ContentIdeas />;
       case "saved":
         return <SavedIdeasPage />;
-      case "search":
-        return <Settings />;
       case "settings":
         return <Settings />;
       case "subscription":
         return <SubscriptionPlans />;
-      case "newIdea":
-        return <MultiStepForm />
-      case "newIdea":
       default:
         return <Start />;
     }
