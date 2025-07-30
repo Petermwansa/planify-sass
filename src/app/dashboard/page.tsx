@@ -26,7 +26,7 @@ const Dashboard = () => {
       case "multistepform": 
         return <MultiStepForm />
       default:
-        return <Start />;
+        return <Start setActiveView={setActiveView} />;
     }
   };
 

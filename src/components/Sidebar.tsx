@@ -1,6 +1,5 @@
 import UpgradeBtn from "@/app/UI/Button/Upgrade";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 interface SidebarProps {
