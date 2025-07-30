@@ -27,19 +27,31 @@ const Settings = () => {
           <div className="control_panel_links">
             <button
               onClick={() => setActiveView("profile")}
-              className="control_panel_link"
+              className={` ${
+                activeView === "profile"
+                  ? "control_panel_link_active"
+                  : "control_panel_link"
+              }`}
             >
               My Profile
             </button>
             <button
               onClick={() => setActiveView("usage")}
-              className="control_panel_link"
+              className={`${
+                activeView === "usage"
+                  ? "control_panel_link_active"
+                  : "control_panel_link"
+              }`}
             >
               Usage
             </button>
             <button
               onClick={() => setActiveView("billing")}
-              className="control_panel_link"
+              className={` ${
+                activeView === "billing"
+                  ? "control_panel_link_active"
+                  : "control_panel_link"
+              }`}
             >
               Billing
             </button>
