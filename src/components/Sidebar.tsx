@@ -23,9 +23,9 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveView }) => {
         <h1 className="sidebar-name">{name}</h1>
       </div>
       <div className="sidebar-generate">
-      <Link href={"/dashboard/multistepform"} className="generate-btn">
+      <button onClick={() => setActiveView("multistepform")}className="generate-btn">
         + New Idea
-      </Link>
+      </button>
       </div>
       <nav className="sidebar-nav">
         <button onClick={() => setActiveView("start")} className="sidebar-link">

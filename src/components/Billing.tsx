@@ -1,9 +1,10 @@
 import React from 'react'
+import SubscriptionPlans from './SubscriptionPlans'
 
 export default function Billing() {
   return (
     <div>
-      <h1>Billing</h1>
+      <SubscriptionPlans />
     </div>
   )
 }

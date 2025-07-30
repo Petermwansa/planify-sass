@@ -7,6 +7,7 @@ import ContentIdeas from "@/components/ContentIdeas";
 import Settings from "@/components/Settings";
 import SubscriptionPlans from "@/components/SubscriptionPlans";
 import SavedIdeasPage from "../saved/page";
+import MultiStepForm from "@/components/MultiStepForm";
 
 
 const Dashboard = () => {
@@ -22,6 +23,8 @@ const Dashboard = () => {
         return <Settings />;
       case "subscription":
         return <SubscriptionPlans />;
+      case "multistepform": 
+        return <MultiStepForm />
       default:
         return <Start />;
     }

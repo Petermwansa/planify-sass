@@ -7,7 +7,7 @@ interface UpgradeBtnProps {
 
 function UpgradeBtn({ onClick}: UpgradeBtnProps) {
   return (
-    <button className='upgrade-btn' onClick={onClick}>
+    <button className='upgrade-button' onClick={onClick}>
      Upgrade Plan
     </button>
   )
