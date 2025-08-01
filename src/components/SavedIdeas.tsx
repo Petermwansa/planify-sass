@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Idea } from "@/types/Idea";
-import IdeaCard from "@/components/IdeaCard";
+import IdeaCard from "@/app/UI/Card/IdeaCard";
 
 type SavedIdeasOnlyProps = {
   ideas: Idea[];

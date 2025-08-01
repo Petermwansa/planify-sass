@@ -57,3 +57,12 @@ npm install lodash. // other optional utilities
 
 
 # planify-sass
+
+
+# Setting up the firebase backend
+
+```bash
+npm install firebase
+```
+
+implement the signup with firebase 

@@ -10,20 +10,36 @@ const plans = [
     buttonText: "Free ",
   },
   {
-    id: "pro",
-    name: "Professional",
+    id: "starter",
+    name: "Starter",
     price: "$25",
     description: "Best for growing creators with more needs.",
-    features: ["50 AI content ideas/month", "Priority support", "Analytics tools"],
+    features: [
+      "50 AI content ideas/month",
+      "Priority support",
+      "Analytics tools",
+    ],
+    buttonText: "Starter",
+  },
+  {
+    id: "pro",
+    name: "Professional",
+    price: "$100",
+    description: "Best for growing creators with more needs.",
+    features: [
+      "50 AI content ideas/month",
+      "Priority support",
+      "Analytics tools",
+    ],
     buttonText: "Pro",
   },
   {
-    id: "premium",
-    name: "Premium",
-    price: "$55",
+    id: "agency",
+    name: "Agency",
+    price: "$250",
     description: "For serious creators & agencies with high demands.",
     features: ["Unlimited AI content", "Dedicated support", "Team access"],
-    buttonText: "Premium",
+    buttonText: "Agency",
   },
 ];
 
@@ -39,7 +55,9 @@ const SubscriptionPlans = () => {
           >
             <h3 className="plan_name">{plan.name}</h3>
             <p className="plan_description">{plan.description}</p>
-            <p className="plan_price">{plan.price}/<span>month</span></p>
+            <p className="plan_price">
+              {plan.price}/<span>month</span>
+            </p>
             <ul className="plan_features">
               {plan.features.map((feature, idx) => (
                 <li key={idx}>✔ {feature}</li>

@@ -94,9 +94,9 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveView, activeView }) => {
           Saved Ideas
         </button>
         <button
-          onClick={() => setActiveView("settings")}
+          onClick={() => setActiveView("controlPanel")}
           className={`sidebar-link ${
-            activeView === "settings" ? "sidebar-link-active" : null
+            activeView === "controlPanel" ? "sidebar-link-active" : null
           }`}
         >
           <svg

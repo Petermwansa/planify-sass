@@ -1,21 +1,59 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { googleLogin, signup } from "@/services/authService";
+import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+
 import Link from "next/link";
-import Button from "../UI/Button/Button";
+import Button from "../../UI/Button/Button";
 import Image from "next/image";
-import "../../styles/globals.css";
+import "../../../styles/globals.css";
 
 export default function SignupPage() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await signup(email, password, name);
+    } catch (err: any) {
+      setError("Signup failed. Please try again.");
+    }
+  };
+
+  // ✅ Wait for Firebase to confirm user is logged in
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push("/");
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
   return (
     <main className="flex bg-cyan-50 h-screen">
-      <div className="w-1/2 bg-teal-600 flex items-center  flex-col justify-center custom-top-right-rounded">
-        <h1 className="text-xl">Planify.Ai</h1> <br />
-        <p className="text-white">Your Content Creation Ai assistant</p>
+      <div className="left_auth">
+        <h1 className="logo">Planify.Ai</h1> <br />
+        {/* <p className="auth_p">Your Content Creation Ai assistant</p> */}
       </div>
-      <div className="w-1/2 bg-cyan-50 flex items-center text-black flex-col create-div">
+      <div className="right_auth">
         <div className="create-top">
           <h1 className="text-xl">Create an Account</h1>
           <p className="text-black">Sign up and get a 14-day free trial</p>
         </div>
-        <form className=" sign-form bg-[#aad5fb] ounded-[50px] p-5 max-w-[600px] mx-auto ">
+        <form
+          onSubmit={handleSignup}
+          className=" sign-form bg-[#aad5fb] ounded-[50px] p-5 max-w-[600px] mx-auto "
+        >
+          {error && <p className="text-red-500">{error}</p>}
+
           <div className="input-group">
             <label htmlFor="email" className="block text-sm font-medium">
               Name
@@ -24,6 +62,7 @@ export default function SignupPage() {
               id="name"
               type="text"
               className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -35,21 +74,23 @@ export default function SignupPage() {
               id="email"
               type="email"
               className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className="input-group">
-            <label htmlFor="passowrd" className="block text-sm font-medium">
+            <label htmlFor="password" className="block text-sm font-medium">
               Password
             </label>{" "}
             <input
               id="password"
               type="password"
               className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          <div className="input-group">
+          {/* <div className="input-group">
             <label
               htmlFor="repeatpassword"
               className="block text-sm font-medium"
@@ -62,21 +103,32 @@ export default function SignupPage() {
               className="mt-1 block w-full border border-gray-300 rounded px-3 py-2"
               required
             />
-          </div>
-          <Button>Sign up</Button>
+          </div> */}
+          <Button type="submit">Sign up</Button>
           <div className="socials-text">
             <p>Or sign up with</p>
           </div>
           <div className="create-socials">
-            <Link href="#">
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  await googleLogin();
+                  router.push("/"); // Redirect after Google signup
+                } catch (error) {
+                  setError("Google signup failed. Please try again.");
+                }
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-white border rounded hover:bg-gray-100"
+            >
               <Image
                 src="/images/google.png"
-                alt="Google icon for signing up with google"
+                alt="Google icon for signing up with Google"
                 width={20}
                 height={20}
               />
-            </Link>
-            <Link href="#">
+            </button>
+            {/* <Link href="#">
               <Image
                 src="/images/facebook.png"
                 alt="Google icon for signing up with facebook"
@@ -91,14 +143,14 @@ export default function SignupPage() {
                 width={20}
                 height={20}
               />
-            </Link>
+            </Link> */}
           </div>
         </form>
 
         <div className="bottom-create">
           <p>
             Already have an account yet?{" "}
-            <Link href="#" className="link">
+            <Link href="/signin" className="link">
               Sign in
             </Link>
           </p>

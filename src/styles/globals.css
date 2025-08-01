@@ -26,19 +26,90 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--secondary);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.logo {
-  color: #000000;
+.welcome {
   font-size: 3rem;
-  margin: 1rem;
+  font-weight: 100;
+  margin: auto;
+  color: var(--dark);
 }
 
-.custom-top-right-rounded {
-  border-top-right-radius: 50%;
+
+.logout_button {
+  color: var(--dark);
+  margin: auto;
+  padding: .5rem 2rem .5rem 2rem;
+  font-size: 1rem;
+  background: var(--secondary);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  transition: .5s ease-in-out;
+}
+
+.logout_button:hover {
+  color: var(--secondary);
+  margin: auto;
+  padding: .5rem 2rem .5rem 2rem;
+  font-size: 1rem;
+  background: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  transition: .5s ease-in-out;
+}
+
+.landing_button {
+  background: var(--primary);
+  padding: 1rem 3rem;
+  margin: auto;
+  border-radius: 20px;
+  transition: .5s ease-in-out;
+}
+
+.landing_button:hover {
+  background: var(--secondary);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+
+.dashboard_main  {
+  flex: 1;                   
+  overflow-y: auto;         
+  padding: 2rem;  
+  background: var(--secondary);          
+}
+
+.left_auth {
+  width: 50%; 
+  background-color: var(--primary); 
+  display: flex;  
+  flex-direction: column; 
+  align-items: center;    
+  justify-content: center; 
+  border-top-right-radius: 50% 
+}
+
+
+.logo {
+  color: var(--dark);
+  font-weight: 600;
+  font-size: 3rem;
+  margin: auto;
+}
+
+
+.right_auth {
+  width: 50%;  
+  background-color: var(--secondary); 
+  display: flex;  
+  flex-direction: column; 
+  align-items: center;  
+  color: #000000;  
+  margin-top: 10rem;
 }
 
 .create-div {
@@ -251,7 +322,7 @@ body {
 .entry {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center vertically */
+  justify-content: center; 
   align-items: center;
   width: 100%;
   margin: auto;
@@ -433,7 +504,7 @@ border: 2px solid transparent;
 }
 
 .input_field {
-  background: var(--secondary);
+  background: var(--foreground);
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -480,17 +551,17 @@ border: 2px solid transparent;
 }
 
 .progress_bar_container {
-  width: 100%; /* w-full */
-  background-color: #d1d5db; /* bg-gray-300 */
-  border-radius: 9999px; /* rounded-full */
-  height: 3rem; /* h-4 => 16px */
-  overflow: hidden; /* overflow-hidden */
+  width: 100%; 
+  background-color: var(--foreground);
+  border-radius: 9999px; 
+  height: 3rem;
+  overflow: hidden; 
 }
 
 .progress_bar_inner {
-  background-color: var(--primary); /* bg-blue-600 */
-  height: 100%; /* h-full      */
-  transition: all 300ms ease-in-out; /* transition‑all duration‑300 ease‑in‑out */
+  background-color: var(--primary);
+  height: 100%; 
+  transition: all 300ms ease-in-out; 
 }
 
 /* ========= FOR THE SUBSCRIPTION PLANS =========  */

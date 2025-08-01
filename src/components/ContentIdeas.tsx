@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { dummyIdeas as initialIdeas } from "@/data/dummyIdeas";
-import IdeaCard from "@/components/IdeaCard";
+import IdeaCard from "@/app/UI/Card/IdeaCard";
 import { Idea } from "@/types/Idea";
 
 const ContentIdeas = () => {

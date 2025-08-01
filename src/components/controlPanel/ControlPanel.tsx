@@ -3,7 +3,7 @@ import Profile from "./Profile";
 import Usage from "./Usage";
 import Billing from "./Billing";
 
-const Settings = () => {
+const ControlPanel = () => {
   const [activeView, setActiveView] = useState("profile");
 
   const renderView = () => {
@@ -63,4 +63,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default ControlPanel;
