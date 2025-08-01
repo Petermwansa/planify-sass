@@ -14,14 +14,6 @@ const firebaseConfig = {
 
 
 
-//   apiKey: "AIzaSyBgxpNA4O9AqbRmzBKzKKpUbfxf1Q5ok1g",
-//   authDomain: "planify-saasp.firebaseapp.com",
-//   projectId: "planify-saasp",
-//   storageBucket: "planify-saasp.firebasestorage.app",
-//   messagingSenderId: "1026448247542",
-//   appId: "1:1026448247542:web:6a9d923a81f18e0530bad7",
-//   measurementId: "G-DPY1F988P9",
-
 
 };
 
