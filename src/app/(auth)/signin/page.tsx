@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { login, googleLogin } from "@/services/authService";
+import { login, googleLogin, forgotPassword } from "@/services/authService";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "../../UI/Button/Button";
@@ -13,7 +13,9 @@ import { auth } from "@/lib/firebase";
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -30,6 +32,17 @@ export default function SignupPage() {
       await googleLogin();
     } catch (err: any) {
       setError(err.message);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    const result = await forgotPassword(email);
+    if (result.success) {
+      setSuccessMsg(result.message);
+      setError(null);
+    } else {
+      setError(result.message);
+      setSuccessMsg(null);
     }
   };
 
@@ -59,10 +72,11 @@ export default function SignupPage() {
           className=" sign-form bg-[#aad5fb] ounded-[50px] p-5 max-w-[600px] mx-auto "
         >
           {error && <p className="text-red-500 text-sm">{error}</p>}
+          {successMsg && <p className="text-green-500">{successMsg}</p>}
 
           <div className="input-group">
             <label htmlFor="email" className="block text-sm font-medium">
-              Email
+              Please Enter Your Email
             </label>{" "}
             <input
               id="email"
@@ -74,7 +88,7 @@ export default function SignupPage() {
           </div>
           <div className="input-group">
             <label htmlFor="passowrd" className="block text-sm font-medium">
-              Password
+              Please Enter Your Password
             </label>{" "}
             <input
               id="password"
@@ -128,10 +142,13 @@ export default function SignupPage() {
             </Link> */}
           </div>
         </form>
-
+        <div className="reset">
+        <h1>Did you forget your password?</h1>
+        <Link href={"/reset"} className="reset_link">Reset my Password</Link>
+        </div>
         <div className="bottom-create">
           <p>
-            Don&apos;t have an account yet?{" "}
+            You don&apos;t have an account yet?{" "}
             <Link href="/signup" className="link">
               Sign up
             </Link>

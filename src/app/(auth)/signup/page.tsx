@@ -31,7 +31,10 @@ export default function SignupPage() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("User is logged in", user);
         router.push("/");
+      } else {
+        console.log("There is no active Token");
       }
     });
     return () => unsubscribe();
@@ -56,7 +59,7 @@ export default function SignupPage() {
 
           <div className="input-group">
             <label htmlFor="email" className="block text-sm font-medium">
-              Name
+              Please Enter Your Name
             </label>{" "}
             <input
               id="name"
@@ -68,7 +71,7 @@ export default function SignupPage() {
           </div>
           <div className="input-group">
             <label htmlFor="email" className="block text-sm font-medium">
-              Email
+              Please Enter Your Email
             </label>{" "}
             <input
               id="email"
@@ -80,7 +83,7 @@ export default function SignupPage() {
           </div>
           <div className="input-group">
             <label htmlFor="password" className="block text-sm font-medium">
-              Password
+              Please Create a Password
             </label>{" "}
             <input
               id="password"
@@ -149,7 +152,7 @@ export default function SignupPage() {
 
         <div className="bottom-create">
           <p>
-            Already have an account yet?{" "}
+            Do you already have an account yet?{" "}
             <Link href="/signin" className="link">
               Sign in
             </Link>

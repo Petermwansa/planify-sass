@@ -125,6 +125,15 @@ body {
   margin-top: -3rem;
 }
 
+.create-top-reset {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  margin-top: 3rem;
+}
+
 .create-top h1 {
   font-size: 2rem;
   font-weight: 600;
@@ -135,6 +144,31 @@ body {
   font-size: 1rem;
   font-weight: 100;
   margin-bottom: 0.5rem;
+}
+
+.create-top-reset h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.reset {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: .5rem;
+  margin-top: 2rem;
+  font-style:italic;
+  font-size: 1rem;
+  font-weight: 100;
+}
+
+.reset_link {
+  color: var(--tertiary);
+}
+
+.reset_link:hover {
+  text-decoration: underline;
 }
 
 .sign-form {
