@@ -50,9 +50,10 @@ export const googleLogin = async () => {
   await setDoc(
     doc(db, "users", user.uid),
     {
+      name: user.displayName,
       email: user.email,
+      profilePhoto: user.photoURL,
       plan: "free",
-      profilePhoto: "",
       bio: "",
       industry: "",
       company: "",
@@ -61,16 +62,43 @@ export const googleLogin = async () => {
       stripeCustomerId: "",
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
-      usage: {
-        monthlyGenerations: 0,
-        limit: 10,
-      },
+      usage: { monthlyGenerations: 0, limit: 10 },
       savedIdeas: [],
       searchHistory: [],
     },
     { merge: true }
   );
 };
+
+// export const googleLogin = async () => {
+//   const provider = new GoogleAuthProvider();
+//   const result = await signInWithPopup(auth, provider);
+//   const user = result.user;
+
+//   await setDoc(
+//     doc(db, "users", user.uid),
+//     {
+//       email: user.email,
+//       plan: "free",
+//       profilePhoto: "",
+//       bio: "",
+//       industry: "",
+//       company: "",
+//       role: "",
+//       teamSize: "",
+//       stripeCustomerId: "",
+//       createdAt: serverTimestamp(),
+//       updatedAt: serverTimestamp(),
+//       usage: {
+//         monthlyGenerations: 0,
+//         limit: 10,
+//       },
+//       savedIdeas: [],
+//       searchHistory: [],
+//     },
+//     { merge: true }
+//   );
+// };
 
 export const logout = async () => {
   try {
