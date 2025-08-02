@@ -8,7 +8,7 @@ import SubscriptionPlans from "@/components/SubscriptionPlans";
 import SavedIdeasPage from "../saved/page";
 import MultiStepForm from "@/components/MultiStepForm";
 import ControlPanel from "@/components/controlPanel/ControlPanel";
-
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
@@ -23,22 +23,24 @@ const Dashboard = () => {
         return <ControlPanel />;
       case "subscription":
         return <SubscriptionPlans />;
-      case "multistepform": 
-        return <MultiStepForm />
+      case "multistepform":
+        return <MultiStepForm />;
       default:
         return <Start setActiveView={setActiveView} />;
     }
   };
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      <Sidebar setActiveView={setActiveView} activeView={activeView} />
-      <main className="dashboard_main">
-        <h1 className="logo">Planify.Ai</h1>
+    <ProtectedRoute>
+      <div className="flex h-screen overflow-hidden">
+        <Sidebar setActiveView={setActiveView} activeView={activeView} />
+        <main className="dashboard_main">
+          <h1 className="logo">Planify.Ai</h1>
 
-        <div className="start">{renderView()}</div>
-      </main>
-    </div>
+          <div className="start">{renderView()}</div>
+        </main>
+      </div>
+    </ProtectedRoute>
   );
 };
 
