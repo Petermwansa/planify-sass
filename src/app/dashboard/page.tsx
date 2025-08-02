@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import Start from "@/components/Start";
 import ContentIdeas from "@/components/ContentIdeas";
@@ -12,6 +12,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
+
 
   const renderView = () => {
     switch (activeView) {

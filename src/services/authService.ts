@@ -1,12 +1,20 @@
 import { auth, db } from "@/lib/firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
-
 export const signup = async (email: string, password: string, name: string) => {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
   const user = userCredential.user;
 
   await setDoc(doc(db, "users", user.uid), {
@@ -14,6 +22,11 @@ export const signup = async (email: string, password: string, name: string) => {
     email: user.email,
     plan: "free",
     profilePhoto: "",
+    bio: "",
+    industry: "",
+    company: "",
+    role: "",
+    teamSize: "",
     stripeCustomerId: "",
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
@@ -26,7 +39,7 @@ export const signup = async (email: string, password: string, name: string) => {
   });
 };
 
-export const login = (email: string, password: string) => 
+export const login = (email: string, password: string) =>
   signInWithEmailAndPassword(auth, email, password);
 
 export const googleLogin = async () => {
@@ -34,20 +47,30 @@ export const googleLogin = async () => {
   const result = await signInWithPopup(auth, provider);
   const user = result.user;
 
-  await setDoc(doc(db, "users", user.uid), {
-    name: user.displayName,
-    email: user.email,
-    profilePhoto: user.photoURL,
-    plan: "free",
-    stripeCustomerId: "",
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-    usage: { monthlyGenerations: 0, limit: 10 },
-    savedIdeas: [],
-    searchHistory: [],
-  }, { merge: true });
+  await setDoc(
+    doc(db, "users", user.uid),
+    {
+      email: user.email,
+      plan: "free",
+      profilePhoto: "",
+      bio: "",
+      industry: "",
+      company: "",
+      role: "",
+      teamSize: "",
+      stripeCustomerId: "",
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      usage: {
+        monthlyGenerations: 0,
+        limit: 10,
+      },
+      savedIdeas: [],
+      searchHistory: [],
+    },
+    { merge: true }
+  );
 };
-
 
 export const logout = async () => {
   try {
@@ -57,12 +80,11 @@ export const logout = async () => {
   }
 };
 
-
 export const forgotPassword = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    return { success: true, message: "password reset email sent"}
+    return { success: true, message: "password reset email sent" };
   } catch (error: any) {
-    return { success: false, message: error.message}
+    return { success: false, message: error.message };
   }
-}
+};

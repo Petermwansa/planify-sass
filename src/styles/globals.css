@@ -31,6 +31,24 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.landing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing_top {
+  padding: 0rem;
+}
+
+.landing_bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
 .welcome {
   font-size: 3rem;
   font-weight: 100;
@@ -38,27 +56,26 @@ body {
   color: var(--dark);
 }
 
-
 .logout_button {
   color: var(--dark);
   margin: auto;
-  padding: .5rem 2rem .5rem 2rem;
+  padding: 0.5rem 2rem 0.5rem 2rem;
   font-size: 1rem;
   background: var(--secondary);
   border: 1px solid var(--primary);
   border-radius: 20px;
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 .logout_button:hover {
   color: var(--secondary);
   margin: auto;
-  padding: .5rem 2rem .5rem 2rem;
+  padding: 0.5rem 2rem 0.5rem 2rem;
   font-size: 1rem;
   background: var(--primary);
   border: 1px solid var(--primary);
   border-radius: 20px;
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 .landing_button {
@@ -66,7 +83,7 @@ body {
   padding: 1rem 3rem;
   margin: auto;
   border-radius: 20px;
-  transition: .5s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 .landing_button:hover {
@@ -75,24 +92,22 @@ body {
   color: var(--primary);
 }
 
-
-.dashboard_main  {
-  flex: 1;                   
-  overflow-y: auto;         
-  padding: 2rem;  
-  background: var(--secondary);          
+.dashboard_main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  background: var(--secondary);
 }
 
 .left_auth {
-  width: 50%; 
-  background-color: var(--primary); 
-  display: flex;  
-  flex-direction: column; 
-  align-items: center;    
-  justify-content: center; 
-  border-top-right-radius: 50% 
+  width: 50%;
+  background-color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 50%;
 }
-
 
 .logo {
   color: var(--dark);
@@ -101,14 +116,20 @@ body {
   margin: auto;
 }
 
+.logo_landing {
+  color: var(--dark);
+  font-weight: 600;
+  font-size: 3rem;
+  margin: -15rem auto 10rem auto;
+}
 
 .right_auth {
-  width: 50%;  
-  background-color: var(--secondary); 
-  display: flex;  
-  flex-direction: column; 
-  align-items: center;  
-  color: #000000;  
+  width: 50%;
+  background-color: var(--secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #000000;
   margin-top: 10rem;
 }
 
@@ -156,9 +177,9 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  gap: .5rem;
+  gap: 0.5rem;
   margin-top: 2rem;
-  font-style:italic;
+  font-style: italic;
   font-size: 1rem;
   font-weight: 100;
 }
@@ -356,7 +377,7 @@ body {
 .entry {
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   width: 100%;
   margin: auto;
@@ -474,8 +495,8 @@ hr {
   font-size: 1.5rem;
   font-weight: 500;
   cursor: pointer;
-  padding: 5px 20px;  
-border: 2px solid transparent;
+  padding: 5px 20px;
+  border: 2px solid transparent;
 }
 
 .control_panel_link_active {
@@ -585,17 +606,17 @@ border: 2px solid transparent;
 }
 
 .progress_bar_container {
-  width: 100%; 
+  width: 100%;
   background-color: var(--foreground);
-  border-radius: 9999px; 
+  border-radius: 9999px;
   height: 3rem;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .progress_bar_inner {
   background-color: var(--primary);
-  height: 100%; 
-  transition: all 300ms ease-in-out; 
+  height: 100%;
+  transition: all 300ms ease-in-out;
 }
 
 /* ========= FOR THE SUBSCRIPTION PLANS =========  */

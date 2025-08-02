@@ -1,6 +1,9 @@
 import UpgradeBtn from "@/app/UI/Button/Upgrade";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 interface SidebarProps {
   setActiveView: (view: string) => void;
@@ -8,15 +11,36 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ setActiveView, activeView }) => {
-  const name = "Peter Mwansa";
+  const [name, setName] = useState<string | null>(null);
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setName(docSnap.data().name);
+          setProfilePhoto(docSnap.data().profilePhoto);
+        } else {
+          setName(user.displayName || "User");
+        }
+        setIsLoaded(true);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="w-64 h-screen bg-gray-800 text-white sidebar flex flex-col p-5 sidebar">
       <div className="sidebar-profile">
         <Image
           className="sidebar-image"
-          alt="The profile image if the user"
-          src="/images/apple.png"
+          alt="The profile image of the user"
+          src={profilePhoto || "/default-profile.png"}
           width={60}
           height={60}
         />
