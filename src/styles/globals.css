@@ -440,12 +440,14 @@ body {
   width: 200px;
 }
 
+
 .idea_card {
   background-color: white;
   border-radius: 0.5rem; /* rounded-lg = 8px */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); /* Tailwind's default shadow */
   padding: 1rem; /* p-4 = 16px */
 }
+
 
 .idea_card_section_header {
   display: flex;
@@ -544,6 +546,7 @@ hr {
   color: black;
 }
 
+
 .image_edit {
   background: gray;
   padding: 0.3rem;
@@ -553,6 +556,17 @@ hr {
   cursor: pointer;
 }
 
+.profile_edit {
+  color: var(--tertiary);
+  cursor: pointer;
+}
+
+.panel_name_title {
+  color: var(--dark);
+  font-size: 1rem;
+  font-weight: 900;
+}
+
 .panel_name {
   color: var(--dark);
   font-size: 1rem;
@@ -560,6 +574,13 @@ hr {
 
 .panel_state {
   color: var(--tertiary);
+}
+
+.panel_input {
+  background-color: var(--secondary);
+  color: var(--dark);
+  border-radius: 10px;
+  padding: .5rem 1rem;
 }
 
 .profile_details_inner {
@@ -577,7 +598,6 @@ hr {
   color: var(--dark);
 }
 
-
 .input_field {
   background: var(--foreground);
   display: flex;
@@ -591,7 +611,6 @@ hr {
   margin: 1rem 0;
 }
 
-
 .input_field button {
   background: grey;
   padding: 0.3rem;
@@ -601,6 +620,13 @@ hr {
 
 .input_field button {
   cursor: pointer;
+}
+
+.profile_save {
+  color: var(--secondary);
+  padding: 1rem;
+  background: var(--primary);
+  border-radius: 20px;
 }
 
 .usage {
@@ -640,7 +666,9 @@ hr {
   transition: all 300ms ease-in-out;
 }
 
+
 /* ========= FOR THE SUBSCRIPTION PLANS =========  */
+
 
 .plans {
   display: flex;

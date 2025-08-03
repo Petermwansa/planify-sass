@@ -16,6 +16,10 @@ export default function Profile() {
   const [teamSize, setTeamSize] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const [isEditing, setIsEditing] = useState(false);
+
+  const toggleEditing = () => setIsEditing((prev) => !prev);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -57,32 +61,105 @@ export default function Profile() {
             <button className="image_edit">Upload Photo</button>
           </div>
         </div>
-        <div className="profile_details">
-          <div className="input_field">
-            <h1 className="panel_name">{name}</h1>
-            <h1 className="panel_state">Edit Name</h1>
+        <button className="profile_edit" onClick={toggleEditing}>
+          {isEditing ? "Cancel" : "Edit Profile"}
+        </button>
+
+        {isEditing ? (
+          <div className="profile_edit_form">
+            <div className="input_field">
+              <label className="panel_name_title">Bio</label>
+              <textarea
+                className="panel_input"
+                value={bio || ""}
+                onChange={(e) => setBio(e.target.value)}
+                                placeholder="Edit Your Bio"
+
+              />
+            </div>
+            <div className="input_field">
+              <label className="panel_name_title">Industry</label>
+              <input
+                className="panel_input"
+                value={industry || ""}
+                onChange={(e) => setIndustry(e.target.value)}
+                                placeholder="Edit Your Industry"
+
+              />
+            </div>
+            <div className="input_field">
+              <label className="panel_name_title">Company</label>
+              <input
+                className="panel_input"
+                value={company || ""}
+                onChange={(e) => setCompany(e.target.value)}
+                                placeholder="Edit Your Company"
+
+              />
+            </div>
+            <div className="input_field">
+              <label className="panel_name_title">Role</label>
+              <input
+                className="panel_input"
+                value={role || ""}
+                onChange={(e) => setRole(e.target.value)}
+                placeholder="Edit Your Role"
+              />
+            </div>
+            <div className="input_field">
+              <label className="panel_name_title">Team Size</label>
+              <input
+                className="panel_input"
+                value={teamSize || ""}
+                onChange={(e) => setTeamSize(e.target.value)}
+                                placeholder="Edit Your Team Size"
+
+              />
+            </div>
+            <button className="profile_save">Save Changes</button>
           </div>
-          <div className="input_field">
-            <h1 className="panel_name">{email}</h1>
-            <h1 className="panel_state">Change Password</h1>
+        ) : (
+          <div className="profile_details">
+            <div className="input_field">
+              <h1 className="panel_name_title">Name</h1>
+              <h1 className="panel_name">{name}</h1>
+            </div>
+            <div className="input_field">
+              <h1 className="panel_name_title">Email</h1>
+              <h1 className="panel_name">{email}</h1>
+            </div>
+            <div className="input_field">
+              <h1 className="panel_name_title">Current Plan</h1>
+
+              <h1 className="panel_name">{plan}</h1>
+            </div>
+            <div className="input_field">
+              <h1 className="panel_name_title">Bio</h1>
+
+              <h1 className="panel_name">{bio}</h1>
+            </div>
+            <div className="input_field">
+              <h1 className="panel_name_title">Industry</h1>
+
+              <h1 className="panel_name">{industry}</h1>
+            </div>
+            <div className="input_field">
+              <h1 className="panel_name_title">Company</h1>
+
+              <h1 className="panel_name">{company}</h1>
+            </div>
+            <div className="input_field">
+              <h1 className="panel_name_title">Role</h1>
+
+              <h1 className="panel_name">{role}</h1>
+            </div>
+            <div className="input_field">
+              <h1 className="panel_name_title">Team Size</h1>
+
+              <h1 className="panel_name">{teamSize}</h1>
+            </div>
           </div>
-          <div className="input_field">
-            <h1 className="panel_name">{bio}</h1>
-            <h1 className="panel_state">Set Bio</h1>
-          </div>
-          <div className="input_field">
-            <h1 className="panel_name">{company}</h1>
-            <h1 className="panel_state">Edit Company</h1>
-          </div>
-          <div className="input_field">
-            <h1 className="panel_name">{role}</h1>
-            <h1 className="panel_state">Edit Role</h1>
-          </div>
-          <div className="input_field">
-            <h1 className="panel_name">{teamSize}</h1>
-            <h1 className="panel_state">Edit Team Size</h1>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
