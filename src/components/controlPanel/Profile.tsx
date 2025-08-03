@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { auth, db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Profile() {
@@ -45,6 +45,30 @@ export default function Profile() {
     return () => unsubscribe();
   }, []);
 
+  // the function to persist the edited data to the database
+
+  const handleSaveChanges = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const userRef = doc(db, "users", user.uid);
+
+    try {
+      await updateDoc(userRef, {
+        bio,
+        company,
+        industry,
+        role,
+        teamSize,
+      });
+      alert("Your profile has been updated successfully");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile.");
+    }
+  };
+
   return (
     <div>
       <div className="panel-profile">
@@ -73,8 +97,7 @@ export default function Profile() {
                 className="panel_input"
                 value={bio || ""}
                 onChange={(e) => setBio(e.target.value)}
-                                placeholder="Edit Your Bio"
-
+                placeholder="Edit Your Bio"
               />
             </div>
             <div className="input_field">
@@ -83,8 +106,7 @@ export default function Profile() {
                 className="panel_input"
                 value={industry || ""}
                 onChange={(e) => setIndustry(e.target.value)}
-                                placeholder="Edit Your Industry"
-
+                placeholder="Edit Your Industry"
               />
             </div>
             <div className="input_field">
@@ -93,8 +115,7 @@ export default function Profile() {
                 className="panel_input"
                 value={company || ""}
                 onChange={(e) => setCompany(e.target.value)}
-                                placeholder="Edit Your Company"
-
+                placeholder="Edit Your Company"
               />
             </div>
             <div className="input_field">
@@ -112,53 +133,56 @@ export default function Profile() {
                 className="panel_input"
                 value={teamSize || ""}
                 onChange={(e) => setTeamSize(e.target.value)}
-                                placeholder="Edit Your Team Size"
-
+                placeholder="Edit Your Team Size"
               />
             </div>
-            <button className="profile_save">Save Changes</button>
+            <button className="profile_save" onClick={handleSaveChanges}>
+              Save Changes
+            </button>
           </div>
         ) : (
-          <div className="profile_details">
-            <div className="input_field">
-              <h1 className="panel_name_title">Name</h1>
-              <h1 className="panel_name">{name}</h1>
-            </div>
-            <div className="input_field">
-              <h1 className="panel_name_title">Email</h1>
-              <h1 className="panel_name">{email}</h1>
-            </div>
-            <div className="input_field">
-              <h1 className="panel_name_title">Current Plan</h1>
+          isLoaded && (
+            <div className="profile_details">
+              <div className="input_field">
+                <h1 className="panel_name_title">Name</h1>
+                <h1 className="panel_name">{name}</h1>
+              </div>
+              <div className="input_field">
+                <h1 className="panel_name_title">Email</h1>
+                <h1 className="panel_name">{email}</h1>
+              </div>
+              <div className="input_field">
+                <h1 className="panel_name_title">Current Plan</h1>
 
-              <h1 className="panel_name">{plan}</h1>
-            </div>
-            <div className="input_field">
-              <h1 className="panel_name_title">Bio</h1>
+                <h1 className="panel_name">{plan}</h1>
+              </div>
+              <div className="input_field">
+                <h1 className="panel_name_title">Bio</h1>
 
-              <h1 className="panel_name">{bio}</h1>
-            </div>
-            <div className="input_field">
-              <h1 className="panel_name_title">Industry</h1>
+                <h1 className="panel_name">{bio}</h1>
+              </div>
+              <div className="input_field">
+                <h1 className="panel_name_title">Industry</h1>
 
-              <h1 className="panel_name">{industry}</h1>
-            </div>
-            <div className="input_field">
-              <h1 className="panel_name_title">Company</h1>
+                <h1 className="panel_name">{industry}</h1>
+              </div>
+              <div className="input_field">
+                <h1 className="panel_name_title">Company</h1>
 
-              <h1 className="panel_name">{company}</h1>
-            </div>
-            <div className="input_field">
-              <h1 className="panel_name_title">Role</h1>
+                <h1 className="panel_name">{company}</h1>
+              </div>
+              <div className="input_field">
+                <h1 className="panel_name_title">Role</h1>
 
-              <h1 className="panel_name">{role}</h1>
-            </div>
-            <div className="input_field">
-              <h1 className="panel_name_title">Team Size</h1>
+                <h1 className="panel_name">{role}</h1>
+              </div>
+              <div className="input_field">
+                <h1 className="panel_name_title">Team Size</h1>
 
-              <h1 className="panel_name">{teamSize}</h1>
+                <h1 className="panel_name">{teamSize}</h1>
+              </div>
             </div>
-          </div>
+          )
         )}
       </div>
     </div>

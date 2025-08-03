@@ -627,6 +627,7 @@ hr {
   padding: 1rem;
   background: var(--primary);
   border-radius: 20px;
+  cursor: pointer;
 }
 
 .usage {
