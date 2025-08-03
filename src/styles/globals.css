@@ -558,11 +558,31 @@ hr {
   font-size: 1rem;
 }
 
+.panel_state {
+  color: var(--tertiary);
+}
+
+.profile_details_inner {
+  display: flex;
+  justify-content:first baseline;
+  flex-direction: row;
+  width: 50%;
+  margin: 2rem;
+  gap: 10rem;
+}
+
+
+.profile_details_inner h1,
+.profile_details_inner p  {
+  color: var(--dark);
+}
+
+
 .input_field {
   background: var(--foreground);
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   color: var(--dark);
   gap: 20rem;
@@ -570,6 +590,7 @@ hr {
   border-radius: 10px;
   margin: 1rem 0;
 }
+
 
 .input_field button {
   background: grey;

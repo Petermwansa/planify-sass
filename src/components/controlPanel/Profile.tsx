@@ -9,6 +9,11 @@ export default function Profile() {
   const [email, setEmail] = useState<string | null>(null);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [plan, setPlan] = useState<string | null>(null);
+  const [bio, setBio] = useState<string | null>(null);
+  const [company, setCompany] = useState<string | null>(null);
+  const [industry, setIndustry] = useState<string | null>(null);
+  const [role, setRole] = useState<string | null>(null);
+  const [teamSize, setTeamSize] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -22,6 +27,11 @@ export default function Profile() {
           setEmail(docSnap.data().email);
           setProfilePhoto(docSnap.data().profilePhoto);
           setPlan(docSnap.data().plan);
+          setBio(docSnap.data().bio);
+          setCompany(docSnap.data().company);
+          setIndustry(docSnap.data().industry);
+          setRole(docSnap.data().role);
+          setTeamSize(docSnap.data().teamSize);
         } else {
           setName(user.displayName || "User");
         }
@@ -48,25 +58,29 @@ export default function Profile() {
           </div>
         </div>
         <div className="profile_details">
-          <div className="profile_details_plan">
-            <h1>Bio</h1>
-            <p>{plan}</p>
+          <div className="input_field">
+            <h1 className="panel_name">{name}</h1>
+            <h1 className="panel_state">Edit Name</h1>
           </div>
-          <div className="profile_details_plan">
-            <h1>Current Plan</h1>
-            <p>{plan}</p>
+          <div className="input_field">
+            <h1 className="panel_name">{email}</h1>
+            <h1 className="panel_state">Change Password</h1>
           </div>
-          <div className="profile_details_plan">
-            <h1>Industry</h1>
-            <p>{plan}</p>
+          <div className="input_field">
+            <h1 className="panel_name">{bio}</h1>
+            <h1 className="panel_state">Set Bio</h1>
           </div>
-          <div className="profile_details_plan">
-            <h1>Role / Title</h1>
-            <p>{plan}</p>
+          <div className="input_field">
+            <h1 className="panel_name">{company}</h1>
+            <h1 className="panel_state">Edit Company</h1>
           </div>
-          <div className="profile_details_plan">
-            <h1>Team Size</h1>
-            <p>{plan}</p>
+          <div className="input_field">
+            <h1 className="panel_name">{role}</h1>
+            <h1 className="panel_state">Edit Role</h1>
+          </div>
+          <div className="input_field">
+            <h1 className="panel_name">{teamSize}</h1>
+            <h1 className="panel_state">Edit Team Size</h1>
           </div>
         </div>
       </div>
