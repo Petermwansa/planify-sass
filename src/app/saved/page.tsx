@@ -10,7 +10,7 @@ import SavedIdeasOnly from "@/components/SavedIdeas";
 const SavedIdeasPage = () => {
   const [ideas, setIdeas] = useState<Idea[]>(dummyIdeas);
 
-  const toggleSaved = (id: string) => {
+  const toggleSaved = (id: number) => {
     setIdeas((prev) =>
       prev.map((idea) =>
         idea.id === id ? { ...idea, saved: !idea.saved } : idea

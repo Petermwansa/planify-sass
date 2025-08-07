@@ -6,7 +6,7 @@ import IdeaCard from "@/app/UI/Card/IdeaCard";
 
 type SavedIdeasOnlyProps = {
   ideas: Idea[];
-  onToggleSaved: (id: string) => void;
+  onToggleSaved: (id: number) => void;
 };
 
 const SavedIdeasOnly: React.FC<SavedIdeasOnlyProps> = ({ ideas, onToggleSaved }) => {

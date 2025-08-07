@@ -4,7 +4,7 @@ import { Idea } from "@/types/Idea";
 
 type IdeaCardProps = {
   idea: Idea;
-  onToggleSaved: (id: string) => void;
+  onToggleSaved: (id: number) => void;
 };
 
 const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onToggleSaved }) => {

@@ -6,7 +6,7 @@ import { Idea } from "@/types/Idea";
 const ContentIdeas = () => {
   const [ideas, setIdeas] = useState<Idea[]>(initialIdeas);
 
-  const toggleSaved = (id: string) => {
+  const toggleSaved = (id: number) => {
     setIdeas((prevIdeas) =>
       prevIdeas.map((idea) =>
         idea.id === id ? { ...idea, saved: !idea.saved } : idea

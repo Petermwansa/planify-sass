@@ -28,18 +28,21 @@ const MultiStepForm = () => {
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
-  const handleSubmit = () => {
-    console.log("Submitting:", formData);
-    // Call MongoDB / API here
-    alert("Form submitted!");
-    setStep(1);
-    setFormData({
-      topic: "",
-      category: "",
-      description: "",
-      platform: "",
+const handleSubmit = async () => {
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
     });
-  };
+
+    const data = await res.json();
+    console.log("AI Ideas:", data.ideas);
+    alert("AI Generated Ideas:\n" + data.ideas);
+  } catch (error) {
+    console.error("Failed to generate ideas:", error);
+  }
+};
 
   return (
     <div className="multi-step-form">

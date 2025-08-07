@@ -1,5 +1,5 @@
 export type Idea = {
-  id: string;
+  id: number;
   hook: string;
   idea: string;
   platform: string;
@@ -7,5 +7,5 @@ export type Idea = {
   type: string;
   hashtags: string[];
   createdAt: string;
-  saved: boolean;
+  saved?: boolean;
 };
