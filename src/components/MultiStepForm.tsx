@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import ContentIdeas from "./ContentIdeas"; // Adjust path if needed
+import { Idea } from "@/types/Idea";
 
 type FormData = {
   topic: string;
@@ -18,6 +20,8 @@ const MultiStepForm = () => {
     platform: "",
   });
 
+  const [generatedIdeas, setGeneratedIdeas] = useState<Idea[]>([]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -28,25 +32,26 @@ const MultiStepForm = () => {
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
-const handleSubmit = async () => {
-  try {
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    const data = await res.json();
-    console.log("AI Ideas:", data.ideas);
-    
-    alert("AI Generated Ideas:\n" + data.ideas);
-  } catch (error) {
-    console.error("Failed to generate ideas:", error);
-  }
-};
+      const data = await res.json();
+
+      // Save fetched ideas into state
+      setGeneratedIdeas(data.ideas || []);
+    } catch (error) {
+      console.error("Failed to generate ideas:", error);
+    }
+  };
 
   return (
     <div className="multi-step-form">
+      {/* Step 1: Topic */}
       {step === 1 && (
         <div className="entry">
           <h2 className="entry_title">Enter a Topic / Niche</h2>
@@ -63,6 +68,7 @@ const handleSubmit = async () => {
         </div>
       )}
 
+      {/* Step 2: Category */}
       {step === 2 && (
         <div className="entry">
           <h2 className="entry_title">Enter a Category</h2>
@@ -77,13 +83,14 @@ const handleSubmit = async () => {
             <button onClick={prevStep} className="entry_button">
               Back
             </button>
-            <button className="entry_button" onClick={nextStep}>
+            <button onClick={nextStep} className="entry_button">
               Next
             </button>
           </div>
         </div>
       )}
 
+      {/* Step 3: Description */}
       {step === 3 && (
         <div className="entry">
           <h2 className="entry_title">Enter the Description</h2>
@@ -105,6 +112,7 @@ const handleSubmit = async () => {
         </div>
       )}
 
+      {/* Step 4: Platform */}
       {step === 4 && (
         <div className="entry">
           <h2 className="entry_title">Choose the Platform</h2>
@@ -118,7 +126,7 @@ const handleSubmit = async () => {
             <option value="Instagram">Instagram</option>
             <option value="YouTube">YouTube</option>
             <option value="TikTok">TikTok</option>
-            <option value="Facebook">FaceBook</option>
+            <option value="Facebook">Facebook</option>
           </select>
           <div className="entry_button_group">
             <button onClick={prevStep} className="entry_button">
@@ -130,11 +138,15 @@ const handleSubmit = async () => {
           </div>
         </div>
       )}
+
+      {/* Display generated ideas */}
+      {generatedIdeas.length > 0 && (
+        <div className="mt-10">
+          <ContentIdeas ideas={generatedIdeas} />
+        </div>
+      )}
     </div>
   );
 };
 
 export default MultiStepForm;
-
-
-
