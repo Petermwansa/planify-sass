@@ -9,15 +9,17 @@ import SavedIdeasPage from "../saved/page";
 import MultiStepForm from "@/components/MultiStepForm";
 import ControlPanel from "@/components/controlPanel/ControlPanel";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { Idea } from "@/types/Idea";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
+  const [ideas, setIdeas] = useState<Idea[]>([]); // <-- State to store fetched ideas
 
 
   const renderView = () => {
     switch (activeView) {
       case "ideas":
-        return <ContentIdeas />;
+        return <ContentIdeas ideas={ideas} />; 
       case "saved":
         return <SavedIdeasPage />;
       case "controlPanel":
@@ -25,7 +27,7 @@ const Dashboard = () => {
       case "subscription":
         return <SubscriptionPlans />;
       case "multistepform":
-        return <MultiStepForm />;
+        return <MultiStepForm setIdeas={setIdeas} />; // <-- Pass setter to MultiStepForm
       default:
         return <Start setActiveView={setActiveView} />;
     }

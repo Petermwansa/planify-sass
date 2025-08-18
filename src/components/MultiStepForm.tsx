@@ -11,7 +11,11 @@ type FormData = {
   platform: string;
 };
 
-const MultiStepForm = () => {
+interface MultiStepFormProps {
+  setIdeas: React.Dispatch<React.SetStateAction<Idea[]>>;
+}
+
+const MultiStepForm: React.FC<MultiStepFormProps> = ({ setIdeas }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     topic: "",
@@ -39,11 +43,9 @@ const MultiStepForm = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const data = await res.json();
-
-      // Save fetched ideas into state
-      setGeneratedIdeas(data.ideas || []);
+      console.log("AI Ideas:", data.ideas);
+      setIdeas(data.ideas || []); // <-- Send ideas to dashboard state
     } catch (error) {
       console.error("Failed to generate ideas:", error);
     }
