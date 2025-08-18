@@ -50,7 +50,6 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ setIdeas }) => {
       console.error("Failed to generate ideas:", error);
     }
   };
-
   return (
     <div className="multi-step-form">
       {/* Step 1: Topic */}
