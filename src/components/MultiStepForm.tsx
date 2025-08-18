@@ -38,6 +38,7 @@ const handleSubmit = async () => {
 
     const data = await res.json();
     console.log("AI Ideas:", data.ideas);
+    
     alert("AI Generated Ideas:\n" + data.ideas);
   } catch (error) {
     console.error("Failed to generate ideas:", error);

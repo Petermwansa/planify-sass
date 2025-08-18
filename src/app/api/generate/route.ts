@@ -14,23 +14,30 @@ export async function POST(req: Request) {
       Generate 12 engaging content ideas for the topic "${topic}" in the category "${category}".
       Description: ${description}.
       Target platform: ${platform}.
-      Include:
-      - A catchy hook
-      - The idea content
-      - Suggested hashtags
-      - Content type (e.g., Reel, Post, Story)
-      - A goal (growth, engagement, awareness)
+
+      Return the result as a JSON array of objects.
+      Each object should have:
+      {
+        "id": number,
+        "hook": string,
+        "idea": string,
+        "hashtags": string[],
+        "platform": string,
+        "goal": string,
+        "type": string
+      }
     `;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.8,
+      response_format: { type: "json_object" },
     });
 
-    return NextResponse.json({
-      ideas: response.choices[0].message?.content ?? "No ideas generated",
-    });
+    const data = JSON.parse(response.choices[0].message?.content || "{}");
+
+    return NextResponse.json({ ideas: data });
   } catch (error: unknown) {
     console.error("API error:", error);
 
