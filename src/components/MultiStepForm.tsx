@@ -11,11 +11,8 @@ type FormData = {
   platform: string;
 };
 
-interface MultiStepFormProps {
-  setIdeas: React.Dispatch<React.SetStateAction<Idea[]>>;
-}
 
-const MultiStepForm: React.FC<MultiStepFormProps> = ({ setIdeas }) => {
+const MultiStepForm = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     topic: "",
@@ -24,7 +21,9 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ setIdeas }) => {
     platform: "",
   });
 
-  const [generatedIdeas, setGeneratedIdeas] = useState<Idea[]>([]);
+  const [ideas, setIdeas] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -37,6 +36,8 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ setIdeas }) => {
   const prevStep = () => setStep(step - 1);
 
   const handleSubmit = async () => {
+    setLoading(true);
+
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -45,11 +46,15 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ setIdeas }) => {
       });
       const data = await res.json();
       console.log("AI Ideas:", data.ideas);
-      setIdeas(data.ideas || []); // <-- Send ideas to dashboard state
+      setIdeas(data.ideas);
     } catch (error) {
       console.error("Failed to generate ideas:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+
   return (
     <div className="multi-step-form">
       {/* Step 1: Topic */}
@@ -133,19 +138,15 @@ const MultiStepForm: React.FC<MultiStepFormProps> = ({ setIdeas }) => {
             <button onClick={prevStep} className="entry_button">
               Back
             </button>
-            <button onClick={handleSubmit} className="entry_button">
-              Submit
+            <button onClick={handleSubmit} disabled={loading} className="entry_button">
+              {loading ? "Generating..." : "Generate Ideas"}
             </button>
           </div>
         </div>
       )}
 
       {/* Display generated ideas */}
-      {generatedIdeas.length > 0 && (
-        <div className="mt-10">
-          <ContentIdeas ideas={generatedIdeas} />
-        </div>
-      )}
+      {ideas.length > 0 && <ContentIdeas ideas={ideas} />}
     </div>
   );
 };

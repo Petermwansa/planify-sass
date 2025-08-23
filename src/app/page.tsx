@@ -27,7 +27,6 @@ export default function Home() {
         setIsLoaded(true);
       }
     });
-
     return () => unsubscribe();
   }, []);
 
