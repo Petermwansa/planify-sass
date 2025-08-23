@@ -5,16 +5,16 @@ import Sidebar from "@/components/Sidebar";
 import Start from "@/components/Start";
 import ContentIdeas from "@/components/ContentIdeas";
 import SubscriptionPlans from "@/components/SubscriptionPlans";
-import SavedIdeasPage from "../saved/page";
 import MultiStepForm from "@/components/MultiStepForm";
 import ControlPanel from "@/components/controlPanel/ControlPanel";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Idea } from "@/types/Idea";
+import SavedIdeasOnly from "@/components/SavedIdeas";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
   const [ideas, setIdeas] = useState<any[]>([]); // lifted state
-  const [savedIdea, setSavedIdeas] = useState<Idea[]>([]);
+  const [savedIdeas, setSavedIdeas] = useState<Idea[]>([]);
 
   const handleIdeasGenerated = (newIdeas: Idea[]) => {
     setIdeas(newIdeas);
@@ -45,9 +45,9 @@ const Dashboard = () => {
   const renderView = () => {
     switch (activeView) {
       case "ideas":
-        return <ContentIdeas ideas={ideas} />;
+        return <ContentIdeas ideas={ideas} toggleSaved={toggleSaved} />;
       case "saved":
-        return <SavedIdeasPage />;
+        return <SavedIdeasOnly savedIdeas={savedIdeas} toggleSaved={toggleSaved} />;
       case "controlPanel":
         return <ControlPanel />;
       case "subscription":
@@ -55,7 +55,7 @@ const Dashboard = () => {
       case "multistepform":
         return (
           <MultiStepForm
-            onIdeasGenerated={(generatedIdeas: any[]) => {
+            onIdeasGenerated={(generatedIdeas: Idea[]) => {
               setIdeas(generatedIdeas);
               setActiveView("ideas"); // switch tab automatically
             }}
