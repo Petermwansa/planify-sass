@@ -27,7 +27,7 @@ const Dashboard = () => {
       case "subscription":
         return <SubscriptionPlans />;
       case "multistepform":
-        return <MultiStepForm setIdeas={setIdeas} />; // <-- Pass setter to MultiStepForm
+        return <MultiStepForm/>; // <-- Pass setter to MultiStepForm
       default:
         return <Start setActiveView={setActiveView} />;
     }
