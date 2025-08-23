@@ -58,7 +58,7 @@ const MultiStepForm = ({ onIdeasGenerated }: MultiStepFormProps) => {
       setLoading(false);
     }
   };
-
+  
 
   return (
     <div className="multi-step-form">
@@ -149,6 +149,7 @@ const MultiStepForm = ({ onIdeasGenerated }: MultiStepFormProps) => {
           </div>
         </div>
       )}
+
 
     </div>
   );
