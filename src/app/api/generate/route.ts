@@ -37,7 +37,10 @@ export async function POST(req: Request) {
 
     const data = JSON.parse(response.choices[0].message?.content || "{}");
 
-    return NextResponse.json({ ideas: data });
+    // Ensure we always send back an array
+    const ideasArray = Array.isArray(data) ? data : data.ideas;
+
+    return NextResponse.json({ ideas: ideasArray || [] });
   } catch (error: unknown) {
     console.error("API error:", error);
 
