@@ -12,7 +12,7 @@ type SavedIdeasProps = {
 const SavedIdeasOnly = ({ savedIdeas, toggleSaved }: SavedIdeasProps) => {
   return (
     <div className="content_ideas">
-      <h1>Here are your saved Content Ideas</h1>
+      <h1>Your Saved Content Ideas</h1>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
         {savedIdeas.map((idea) => (
           <IdeaCard key={idea.id} idea={idea} onToggleSaved={toggleSaved} />

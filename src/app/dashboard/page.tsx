@@ -11,15 +11,11 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { Idea } from "@/types/Idea";
 import SavedIdeasOnly from "@/components/SavedIdeas";
 
+
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
   const [ideas, setIdeas] = useState<any[]>([]); // lifted state
   const [savedIdeas, setSavedIdeas] = useState<Idea[]>([]);
-
-  const handleIdeasGenerated = (newIdeas: Idea[]) => {
-    setIdeas(newIdeas);
-    setActiveView("ideas"); // switch automatically
-  };
 
   const toggleSaved = (id: number) => {
     setIdeas((prev) =>
