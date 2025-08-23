@@ -14,6 +14,33 @@ import { Idea } from "@/types/Idea";
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
   const [ideas, setIdeas] = useState<any[]>([]); // lifted state
+  const [savedIdea, setSavedIdeas] = useState<Idea[]>([]);
+
+  const handleIdeasGenerated = (newIdeas: Idea[]) => {
+    setIdeas(newIdeas);
+    setActiveView("ideas"); // switch automatically
+  };
+
+  const toggleSaved = (id: number) => {
+    setIdeas((prev) =>
+      prev.map((idea) =>
+        idea.id === id ? { ...idea, saved: !idea.saved } : idea
+      )
+    );
+
+    setSavedIdeas((prev) => {
+      const idea = ideas.find((idea) => idea.id === id);
+      if (!idea) return prev;
+
+      if (idea.saved) {
+        // if already saved → remove
+        return prev.filter((i) => i.id !== id);
+      } else {
+        // if not saved → add
+        return [...prev, { ...idea, saved: true }];
+      }
+    });
+  };
 
   const renderView = () => {
     switch (activeView) {
