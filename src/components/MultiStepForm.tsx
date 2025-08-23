@@ -49,7 +49,7 @@ const MultiStepForm = ({ onIdeasGenerated }: MultiStepFormProps) => {
       const data = await res.json();
       console.log("AI Ideas:", data.ideas);
       if (data.ideas) {
-        onIdeasGenerated(data.ideas); // send ideas up to Dashboard
+        onIdeasGenerated(data.contentIdeas); // send ideas up to Dashboard
       }
 
     } catch (error) {
