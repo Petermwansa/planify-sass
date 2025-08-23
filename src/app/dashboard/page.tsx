@@ -13,13 +13,12 @@ import { Idea } from "@/types/Idea";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
-  const [ideas, setIdeas] = useState<Idea[]>([]); // <-- State to store fetched ideas
-
+  const [ideas, setIdeas] = useState<any[]>([]); // lifted state
 
   const renderView = () => {
     switch (activeView) {
       case "ideas":
-        return <ContentIdeas ideas={ideas} />; 
+        return <ContentIdeas ideas={ideas} />;
       case "saved":
         return <SavedIdeasPage />;
       case "controlPanel":
@@ -27,7 +26,14 @@ const Dashboard = () => {
       case "subscription":
         return <SubscriptionPlans />;
       case "multistepform":
-        return <MultiStepForm/>; // <-- Pass setter to MultiStepForm
+        return (
+          <MultiStepForm
+            onIdeasGenerated={(generatedIdeas: any[]) => {
+              setIdeas(generatedIdeas);
+              setActiveView("ideas"); // switch tab automatically
+            }}
+          />
+        );
       default:
         return <Start setActiveView={setActiveView} />;
     }

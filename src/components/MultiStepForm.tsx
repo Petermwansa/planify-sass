@@ -11,8 +11,12 @@ type FormData = {
   platform: string;
 };
 
+type MultiStepFormProps = {
+  onIdeasGenerated: (ideas: any[]) => void;
+};
 
-const MultiStepForm = () => {
+
+const MultiStepForm = ({ onIdeasGenerated }: MultiStepFormProps) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     topic: "",
@@ -21,9 +25,7 @@ const MultiStepForm = () => {
     platform: "",
   });
 
-  const [ideas, setIdeas] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -46,7 +48,10 @@ const MultiStepForm = () => {
       });
       const data = await res.json();
       console.log("AI Ideas:", data.ideas);
-      setIdeas(data.ideas);
+      if (data.ideas) {
+        onIdeasGenerated(data.ideas); // send ideas up to Dashboard
+      }
+
     } catch (error) {
       console.error("Failed to generate ideas:", error);
     } finally {
@@ -145,8 +150,6 @@ const MultiStepForm = () => {
         </div>
       )}
 
-      {/* Display generated ideas */}
-      {ideas.length > 0 && <ContentIdeas ideas={ideas} />}
     </div>
   );
 };
