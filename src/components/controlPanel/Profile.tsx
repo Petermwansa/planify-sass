@@ -45,8 +45,8 @@ export default function Profile() {
     return () => unsubscribe();
   }, []);
 
+  
   // the function to persist the edited data to the database
-
   const handleSaveChanges = async () => {
     const user = auth.currentUser;
     if (!user) return;

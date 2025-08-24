@@ -14,12 +14,20 @@ import { onSnapshot } from "firebase/firestore";
 
 // for the firebase
 import { auth, db } from "@/lib/firebase";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
   const [ideas, setIdeas] = useState<any[]>([]); // lifted state
   const [savedIdeas, setSavedIdeas] = useState<Idea[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const toggleSaved = async (id: number) => {
     const user = auth.currentUser;
@@ -55,24 +63,45 @@ const Dashboard = () => {
     }
   };
 
-  // we load the savedIdeas on login
   useEffect(() => {
-    const user = auth.currentUser;
-    if (!user) return;
-
-    const userRef = doc(db, "users", user.uid);
-
-    const unsubscribe = onSnapshot(userRef, (docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        if (data.savedIdeas) {
-          setSavedIdeas(data.savedIdeas);
-        }
+    const fetchSavedIdeas = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "savedIdeas"));
+        const ideas: Idea[] = querySnapshot.docs.map((doc) => ({
+          id: doc.id, // Firestore generates string IDs
+          ...doc.data(),
+        })) as unknown as Idea[];
+        setSavedIdeas(ideas);
+      } catch (error) {
+        console.error("Error fetching saved ideas: ", error);
+      } finally {
+        setLoading(false);
       }
-    });
+    };
 
-    return () => unsubscribe();
+    fetchSavedIdeas();
   }, []);
+
+  if (loading) return <p>Loading saved ideas...</p>;
+
+  // // we load the savedIdeas on login
+  // useEffect(() => {
+  //   const user = auth.currentUser;
+  //   if (!user) return;
+
+  //   const userRef = doc(db, "users", user.uid);
+
+  //   const unsubscribe = onSnapshot(userRef, (docSnap) => {
+  //     if (docSnap.exists()) {
+  //       const data = docSnap.data();
+  //       if (data.savedIdeas) {
+  //         setSavedIdeas(data.savedIdeas);
+  //       }
+  //     }
+  //   });
+
+  //   return () => unsubscribe();
+  // }, []);
 
   const renderView = () => {
     switch (activeView) {
