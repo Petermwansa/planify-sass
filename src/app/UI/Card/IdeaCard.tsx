@@ -42,7 +42,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onToggleSaved }) => {
         Created: {new Date(idea.createdAt).toLocaleDateString()}
       </div>
 
-      <div className="flex justify-between mt-2">
+      <div className="flex justify-center mt-2">
         <button className="idea_button" onClick={() => onToggleSaved(idea.id)}>
           {idea.saved ? (
             <>
