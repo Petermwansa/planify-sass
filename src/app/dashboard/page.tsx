@@ -72,6 +72,7 @@ const Dashboard = () => {
           ...doc.data(),
         })) as unknown as Idea[];
         setSavedIdeas(ideas);
+        console.log("here are the saved Ideas: ", ideas);
       } catch (error) {
         console.error("Error fetching saved ideas: ", error);
       } finally {
