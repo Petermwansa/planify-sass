@@ -78,8 +78,7 @@ const Dashboard = () => {
 
     return () => unsubscribe();
   }, []);
-
-  if (loading) return <p>Loading saved ideas...</p>;
+  
 
   const renderView = () => {
     switch (activeView) {
