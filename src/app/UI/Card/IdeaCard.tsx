@@ -46,12 +46,12 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onToggleSaved }) => {
         <button className="idea_button" onClick={() => onToggleSaved(idea.id)}>
           {idea.saved ? (
             <>
-              <BookmarkCheck className="w-4 h-6 text-green-600" />
+              <BookmarkCheck className="w-4 h-6 text-black" />
               <p>Saved</p>
             </>
           ) : (
             <>
-              <Bookmark className="w-4 h-6" />
+              <Bookmark className="w-4 h-6"/>
               <p>Save</p>
             </>
           )}
