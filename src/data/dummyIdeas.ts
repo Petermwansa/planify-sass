@@ -10,6 +10,7 @@ export const dummyIdeas = [
     createdAt: "2025-07-17T08:00:00Z",
     saved: false, // <-- added field
   },
+
   {
     id: 2,
     hook: "Want to go viral with short-form content?",
@@ -35,7 +36,7 @@ export const dummyIdeas = [
   {
     id: 4,
     hook: "Your audience is scrolling. Here's how to stop them.",
-    idea: "Start your post with a stat that shocks them — then explain why it matters.",
+    idea: "Start your post with a statement that shocks them — then explain why it matters.",
     platform: "Twitter/X",
     hashtags: ["#hook", "#tweettips", "#audiencegrowth"],
     goal: "Boost engagement",
