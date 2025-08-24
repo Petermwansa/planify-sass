@@ -16,11 +16,6 @@ const ContentIdeas = ({ ideas, toggleSaved }: ContentIdeasProps) => {
           <IdeaCard key={idea.id} idea={idea} onToggleSaved={toggleSaved} />
         ))}
       </div>
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
-        {dummyIdeas.map((idea) => (
-          <IdeaCard key={idea.id} idea={idea} onToggleSaved={toggleSaved} />
-        ))}
-      </div>
     </div>
   );
 };
