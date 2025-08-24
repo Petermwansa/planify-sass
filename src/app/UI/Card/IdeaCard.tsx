@@ -56,11 +56,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onToggleSaved }) => {
             </>
           )}
         </button>
-
-        <button className="idea_button">
-          <Copy className="w-4 h-6" />
-          <p>Copy</p>
-        </button>
       </div>
     </div>
   );
