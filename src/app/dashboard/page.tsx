@@ -10,34 +10,20 @@ import ControlPanel from "@/components/controlPanel/ControlPanel";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Idea } from "@/types/Idea";
 import SavedIdeasOnly from "@/components/SavedIdeas";
-import { onSnapshot } from "firebase/firestore";
+import { onSnapshot, doc, updateDoc, arrayUnion, arrayRemove, setDoc } from "firebase/firestore";
 
-// for the firebase
+// firebase
 import { auth, db } from "@/lib/firebase";
-import {
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  collection,
-  getDocs,
-} from "firebase/firestore";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
-  const [ideas, setIdeas] = useState<any[]>([]); // lifted state
+  const [ideas, setIdeas] = useState<Idea[]>([]);
   const [savedIdeas, setSavedIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const toggleSaved = async (id: number) => {
+  const toggleSaved = async (id: string | number) => {
     const user = auth.currentUser;
     if (!user) return; // no user logged in
-
-    setIdeas((prev) =>
-      prev.map((idea) =>
-        idea.id === id ? { ...idea, saved: !idea.saved } : idea
-      )
-    );
 
     const idea = ideas.find((idea) => idea.id === id);
     if (!idea) return;
@@ -45,64 +31,55 @@ const Dashboard = () => {
     const userRef = doc(db, "users", user.uid);
 
     if (idea.saved) {
-      // ✅ Remove from savedIdeas in state + Firestore
+      // remove from savedIdeas
+      setIdeas((prev) =>
+        prev.map((i) => (i.id === id ? { ...i, saved: false } : i))
+      );
       setSavedIdeas((prev) => prev.filter((i) => i.id !== id));
 
       await updateDoc(userRef, {
         savedIdeas: arrayRemove(idea),
       });
     } else {
-      // ✅ Add to savedIdeas in state + Firestore
+      // add to savedIdeas
       const updatedIdea = { ...idea, saved: true };
 
+      setIdeas((prev) =>
+        prev.map((i) => (i.id === id ? updatedIdea : i))
+      );
       setSavedIdeas((prev) => [...prev, updatedIdea]);
 
-      await updateDoc(userRef, {
-        savedIdeas: arrayUnion(updatedIdea),
-      });
+      // if user doc doesn’t exist yet, create it with merge:true
+      await setDoc(
+        userRef,
+        { savedIdeas: arrayUnion(updatedIdea) },
+        { merge: true }
+      );
     }
   };
 
+  // 🔥 Fetch savedIdeas tied to logged-in user
   useEffect(() => {
-    const fetchSavedIdeas = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "savedIdeas"));
-        const ideas: Idea[] = querySnapshot.docs.map((doc) => ({
-          id: doc.id, // Firestore generates string IDs
-          ...doc.data(),
-        })) as unknown as Idea[];
-        setSavedIdeas(ideas);
-        console.log("here are the saved Ideas: ", ideas);
-      } catch (error) {
-        console.error("Error fetching saved ideas: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const user = auth.currentUser;
+    if (!user) return;
 
-    fetchSavedIdeas();
+    const userRef = doc(db, "users", user.uid);
+
+    const unsubscribe = onSnapshot(userRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setSavedIdeas(data.savedIdeas || []);
+      } else {
+        // If user doc doesn't exist yet, initialize with empty savedIdeas
+        setDoc(userRef, { savedIdeas: [] }, { merge: true });
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   if (loading) return <p>Loading saved ideas...</p>;
-
-  // // we load the savedIdeas on login
-  // useEffect(() => {
-  //   const user = auth.currentUser;
-  //   if (!user) return;
-
-  //   const userRef = doc(db, "users", user.uid);
-
-  //   const unsubscribe = onSnapshot(userRef, (docSnap) => {
-  //     if (docSnap.exists()) {
-  //       const data = docSnap.data();
-  //       if (data.savedIdeas) {
-  //         setSavedIdeas(data.savedIdeas);
-  //       }
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
 
   const renderView = () => {
     switch (activeView) {
@@ -121,7 +98,7 @@ const Dashboard = () => {
           <MultiStepForm
             onIdeasGenerated={(generatedIdeas: Idea[]) => {
               setIdeas(generatedIdeas);
-              setActiveView("ideas"); // switch tab automatically
+              setActiveView("ideas");
             }}
           />
         );
@@ -136,7 +113,6 @@ const Dashboard = () => {
         <Sidebar setActiveView={setActiveView} activeView={activeView} />
         <main className="dashboard_main">
           <h1 className="logo">Planify.Ai</h1>
-
           <div className="start">{renderView()}</div>
         </main>
       </div>
