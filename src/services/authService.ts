@@ -6,7 +6,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp} from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
 export const signup = async (email: string, password: string, name: string) => {
@@ -69,36 +69,6 @@ export const googleLogin = async () => {
     { merge: true }
   );
 };
-
-// export const googleLogin = async () => {
-//   const provider = new GoogleAuthProvider();
-//   const result = await signInWithPopup(auth, provider);
-//   const user = result.user;
-
-//   await setDoc(
-//     doc(db, "users", user.uid),
-//     {
-//       email: user.email,
-//       plan: "free",
-//       profilePhoto: "",
-//       bio: "",
-//       industry: "",
-//       company: "",
-//       role: "",
-//       teamSize: "",
-//       stripeCustomerId: "",
-//       createdAt: serverTimestamp(),
-//       updatedAt: serverTimestamp(),
-//       usage: {
-//         monthlyGenerations: 0,
-//         limit: 10,
-//       },
-//       savedIdeas: [],
-//       searchHistory: [],
-//     },
-//     { merge: true }
-//   );
-// };
 
 export const logout = async () => {
   try {

@@ -10,40 +10,78 @@ import ControlPanel from "@/components/controlPanel/ControlPanel";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Idea } from "@/types/Idea";
 import SavedIdeasOnly from "@/components/SavedIdeas";
+import { onSnapshot } from "firebase/firestore";
 
+// for the firebase
+import { auth, db } from "@/lib/firebase";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState("start");
   const [ideas, setIdeas] = useState<any[]>([]); // lifted state
   const [savedIdeas, setSavedIdeas] = useState<Idea[]>([]);
 
-  const toggleSaved = (id: number) => {
+  const toggleSaved = async (id: number) => {
+    const user = auth.currentUser;
+    if (!user) return; // no user logged in
+
     setIdeas((prev) =>
       prev.map((idea) =>
         idea.id === id ? { ...idea, saved: !idea.saved } : idea
       )
     );
 
-    setSavedIdeas((prev) => {
-      const idea = ideas.find((idea) => idea.id === id);
-      if (!idea) return prev;
+    const idea = ideas.find((idea) => idea.id === id);
+    if (!idea) return;
 
-      if (idea.saved) {
-        // if already saved → remove
-        return prev.filter((i) => i.id !== id);
-      } else {
-        // if not saved → add
-        return [...prev, { ...idea, saved: true }];
+    const userRef = doc(db, "users", user.uid);
+
+    if (idea.saved) {
+      // ✅ Remove from savedIdeas in state + Firestore
+      setSavedIdeas((prev) => prev.filter((i) => i.id !== id));
+
+      await updateDoc(userRef, {
+        savedIdeas: arrayRemove(idea),
+      });
+    } else {
+      // ✅ Add to savedIdeas in state + Firestore
+      const updatedIdea = { ...idea, saved: true };
+
+      setSavedIdeas((prev) => [...prev, updatedIdea]);
+
+      await updateDoc(userRef, {
+        savedIdeas: arrayUnion(updatedIdea),
+      });
+    }
+  };
+
+  // we load the savedIdeas on login
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const userRef = doc(db, "users", user.uid);
+
+    const unsubscribe = onSnapshot(userRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data.savedIdeas) {
+          setSavedIdeas(data.savedIdeas);
+        }
       }
     });
-  };
+
+    return () => unsubscribe();
+  }, []);
 
   const renderView = () => {
     switch (activeView) {
       case "ideas":
         return <ContentIdeas ideas={ideas} toggleSaved={toggleSaved} />;
       case "saved":
-        return <SavedIdeasOnly savedIdeas={savedIdeas} toggleSaved={toggleSaved} />;
+        return (
+          <SavedIdeasOnly savedIdeas={savedIdeas} toggleSaved={toggleSaved} />
+        );
       case "controlPanel":
         return <ControlPanel />;
       case "subscription":
