@@ -9,3 +9,7 @@ export type Idea = {
   createdAt: string;
   saved?: boolean;
 };
+
+
+
+
