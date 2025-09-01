@@ -1,6 +1,6 @@
 import IdeaCard from "@/app/UI/Card/IdeaCard";
 import { Idea } from "@/types/Idea";
-import { dummyIdeas } from "@/data/dummyIdeas";
+// import { dummyIdeas } from "@/data/dummyIdeas";
 
 type ContentIdeasProps = {
   ideas: Idea[];
