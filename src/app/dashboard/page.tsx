@@ -58,26 +58,26 @@ const Dashboard = () => {
     }
   };
 
-  // 🔥 Fetch savedIdeas tied to logged-in user
-  useEffect(() => {
-    const user = auth.currentUser;
-    if (!user) return;
+  // // 🔥 Fetch savedIdeas tied to logged-in user
+  // useEffect(() => {
+  //   const user = auth.currentUser;
+  //   if (!user) return;
 
-    const userRef = doc(db, "users", user.uid);
+  //   const userRef = doc(db, "users", user.uid);
 
-    const unsubscribe = onSnapshot(userRef, (docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setSavedIdeas(data.savedIdeas || []);
-      } else {
-        // If user doc doesn't exist yet, initialize with empty savedIdeas
-        setDoc(userRef, { savedIdeas: [] }, { merge: true });
-      }
-      setLoading(false);
-    });
+  //   const unsubscribe = onSnapshot(userRef, (docSnap) => {
+  //     if (docSnap.exists()) {
+  //       const data = docSnap.data();
+  //       setSavedIdeas(data.savedIdeas || []);
+  //     } else {
+  //       // If user doc doesn't exist yet, initialize with empty savedIdeas
+  //       setDoc(userRef, { savedIdeas: [] }, { merge: true });
+  //     }
+  //     setLoading(false);
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
 
   const renderView = () => {
     switch (activeView) {
