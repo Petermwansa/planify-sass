@@ -10,14 +10,7 @@ import ControlPanel from "@/components/controlPanel/ControlPanel";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Idea } from "@/types/Idea";
 import SavedIdeasOnly from "@/components/SavedIdeas";
-import {
-  onSnapshot,
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  setDoc,
-} from "firebase/firestore";
+import { onSnapshot, doc, updateDoc, arrayUnion, arrayRemove, setDoc } from "firebase/firestore";
 
 // firebase
 import { auth, db } from "@/lib/firebase";
@@ -28,29 +21,42 @@ const Dashboard = () => {
   const [savedIdeas, setSavedIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
 
-
   const toggleSaved = async (id: string | number) => {
     const user = auth.currentUser;
-    if (!user) return;
-
-    const userDocRef = doc(db, "users", user.uid);
+    if (!user) return; // no user logged in
 
     const idea = ideas.find((idea) => idea.id === id);
     if (!idea) return;
 
+    const userRef = doc(db, "users", user.uid);
+
     if (idea.saved) {
-      // If already saved → remove it
-      await updateDoc(userDocRef, {
-        savedIdeas: arrayRemove(idea), // remove full object
+      // remove from savedIdeas
+      setIdeas((prev) =>
+        prev.map((i) => (i.id === id ? { ...i, saved: false } : i))
+      );
+      setSavedIdeas((prev) => prev.filter((i) => i.id !== id));
+
+      await updateDoc(userRef, {
+        savedIdeas: arrayRemove(idea),
       });
     } else {
-      // If not saved → add full object
-      await updateDoc(userDocRef, {
-        savedIdeas: arrayUnion({ ...idea, saved: true }),
-      });
+      // add to savedIdeas
+      const updatedIdea = { ...idea, saved: true };
+
+      setIdeas((prev) =>
+        prev.map((i) => (i.id === id ? updatedIdea : i))
+      );
+      setSavedIdeas((prev) => [...prev, updatedIdea]);
+
+      // if user doc doesn’t exist yet, create it with merge:true
+      await setDoc(
+        userRef,
+        { savedIdeas: arrayUnion(updatedIdea) },
+        { merge: true }
+      );
     }
   };
-
 
   // 🔥 Fetch savedIdeas tied to logged-in user
   useEffect(() => {
