@@ -62,6 +62,7 @@ const Dashboard = () => {
       );
     }
   };
+  
   // 🔥 Fetch savedIdeas tied to logged-in user
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
