@@ -10,7 +10,14 @@ import ControlPanel from "@/components/controlPanel/ControlPanel";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Idea } from "@/types/Idea";
 import SavedIdeasOnly from "@/components/SavedIdeas";
-import { onSnapshot, doc, updateDoc, arrayUnion, arrayRemove, setDoc } from "firebase/firestore";
+import {
+  onSnapshot,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  setDoc,
+} from "firebase/firestore";
 
 // firebase
 import { auth, db } from "@/lib/firebase";
@@ -44,9 +51,7 @@ const Dashboard = () => {
       // add to savedIdeas
       const updatedIdea = { ...idea, saved: true };
 
-      setIdeas((prev) =>
-        prev.map((i) => (i.id === id ? updatedIdea : i))
-      );
+      setIdeas((prev) => prev.map((i) => (i.id === id ? updatedIdea : i)));
       setSavedIdeas((prev) => [...prev, updatedIdea]);
 
       // if user doc doesn’t exist yet, create it with merge:true
@@ -57,27 +62,35 @@ const Dashboard = () => {
       );
     }
   };
+  // 🔥 Fetch savedIdeas tied to logged-in user
+  useEffect(() => {
+    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        setSavedIdeas([]); // clear if logged out
+        setLoading(false);
+        return;
+      }
 
-  // // 🔥 Fetch savedIdeas tied to logged-in user
-  // useEffect(() => {
-  //   const user = auth.currentUser;
-  //   if (!user) return;
+      const userRef = doc(db, "users", user.uid);
 
-  //   const userRef = doc(db, "users", user.uid);
+      const unsubscribeSnapshot = onSnapshot(userRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setSavedIdeas(data.savedIdeas || []);
+          console.log("Fetched savedIdeas:", data.savedIdeas);
+        } else {
+          // initialize user doc if missing
+          setDoc(userRef, { savedIdeas: [] }, { merge: true });
+          setSavedIdeas([]);
+        }
+        setLoading(false);
+      });
 
-  //   const unsubscribe = onSnapshot(userRef, (docSnap) => {
-  //     if (docSnap.exists()) {
-  //       const data = docSnap.data();
-  //       setSavedIdeas(data.savedIdeas || []);
-  //     } else {
-  //       // If user doc doesn't exist yet, initialize with empty savedIdeas
-  //       setDoc(userRef, { savedIdeas: [] }, { merge: true });
-  //     }
-  //     setLoading(false);
-  //   });
+      return () => unsubscribeSnapshot();
+    });
 
-  //   return () => unsubscribe();
-  // }, []);
+    return () => unsubscribeAuth();
+  }, []);
 
   const renderView = () => {
     switch (activeView) {
