@@ -10,14 +10,7 @@ import ControlPanel from "@/components/controlPanel/ControlPanel";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Idea } from "@/types/Idea";
 import SavedIdeasOnly from "@/components/SavedIdeas";
-import {
-  onSnapshot,
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  setDoc,
-} from "firebase/firestore";
+import { onSnapshot, doc, updateDoc, arrayUnion, arrayRemove, setDoc } from "firebase/firestore";
 
 // firebase
 import { auth, db } from "@/lib/firebase";
@@ -28,10 +21,9 @@ const Dashboard = () => {
   const [savedIdeas, setSavedIdeas] = useState<Idea[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Save / remove ideas to Firestore
   const toggleSaved = async (id: string | number) => {
     const user = auth.currentUser;
-    if (!user) return;
+    if (!user) return; // no user logged in
 
     const idea = ideas.find((idea) => idea.id === id);
     if (!idea) return;
@@ -39,10 +31,9 @@ const Dashboard = () => {
     const userRef = doc(db, "users", user.uid);
 
     if (idea.saved) {
-      // remove from saved
-      const updatedIdea = { ...idea, saved: false };
+      // remove from savedIdeas
       setIdeas((prev) =>
-        prev.map((i) => (i.id === id ? updatedIdea : i))
+        prev.map((i) => (i.id === id ? { ...i, saved: false } : i))
       );
       setSavedIdeas((prev) => prev.filter((i) => i.id !== id));
 
@@ -50,13 +41,15 @@ const Dashboard = () => {
         savedIdeas: arrayRemove(idea),
       });
     } else {
-      // add to saved
+      // add to savedIdeas
       const updatedIdea = { ...idea, saved: true };
+
       setIdeas((prev) =>
         prev.map((i) => (i.id === id ? updatedIdea : i))
       );
       setSavedIdeas((prev) => [...prev, updatedIdea]);
 
+      // if user doc doesn’t exist yet, create it with merge:true
       await setDoc(
         userRef,
         { savedIdeas: arrayUnion(updatedIdea) },
@@ -65,26 +58,7 @@ const Dashboard = () => {
     }
   };
 
-  // ✅ Persist generated ideas to Firestore
-  const handleIdeasGenerated = async (generatedIdeas: Idea[]) => {
-    const user = auth.currentUser;
-    if (!user) return;
-
-    const userRef = doc(db, "users", user.uid);
-
-    // set local state
-    setIdeas(generatedIdeas);
-    setActiveView("ideas");
-
-    // save to Firestore (overwrites ideas array, but keeps savedIdeas)
-    await setDoc(
-      userRef,
-      { ideas: generatedIdeas },
-      { merge: true }
-    );
-  };
-
-  // ✅ Listen for Firestore updates (both ideas & savedIdeas)
+  // 🔥 Fetch savedIdeas tied to logged-in user
   useEffect(() => {
     const user = auth.currentUser;
     if (!user) return;
@@ -94,11 +68,10 @@ const Dashboard = () => {
     const unsubscribe = onSnapshot(userRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
-        setIdeas(data.ideas || []);
         setSavedIdeas(data.savedIdeas || []);
       } else {
-        // initialize if new user
-        setDoc(userRef, { ideas: [], savedIdeas: [] }, { merge: true });
+        // If user doc doesn't exist yet, initialize with empty savedIdeas
+        setDoc(userRef, { savedIdeas: [] }, { merge: true });
       }
       setLoading(false);
     });
@@ -119,7 +92,14 @@ const Dashboard = () => {
       case "subscription":
         return <SubscriptionPlans />;
       case "multistepform":
-        return <MultiStepForm onIdeasGenerated={handleIdeasGenerated} />;
+        return (
+          <MultiStepForm
+            onIdeasGenerated={(generatedIdeas: Idea[]) => {
+              setIdeas(generatedIdeas);
+              setActiveView("ideas");
+            }}
+          />
+        );
       default:
         return <Start setActiveView={setActiveView} />;
     }
@@ -131,7 +111,7 @@ const Dashboard = () => {
         <Sidebar setActiveView={setActiveView} activeView={activeView} />
         <main className="dashboard_main">
           <h1 className="logo">Planify.Ai</h1>
-          <div className="start">{loading ? <p>Loading...</p> : renderView()}</div>
+          <div className="start">{renderView()}</div>
         </main>
       </div>
     </ProtectedRoute>
