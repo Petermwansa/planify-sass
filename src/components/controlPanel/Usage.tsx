@@ -8,6 +8,7 @@ import ProgressBar from "@/app/UI/ProgressBar";
 export default function Usage() {
   const [progress, setProgress] = useState(0);
   const [limit, setLimit] = useState<number | null>(null);
+  const [plan, setPlan] = useState<string | null>(null);
   const [used, setUsed] = useState(0);
 
   useEffect(() => {
@@ -18,6 +19,9 @@ export default function Usage() {
       const unsubscribeSnapshot = onSnapshot(userRef, (docSnap) => {
         if (docSnap.exists()) {
           const usage = docSnap.data().usage;
+          const data = docSnap.data();
+          setPlan(data.plan || "Free");
+
           if (usage) {
             const usedCount = usage.monthlyGenerations || 0;
             const limitCount = usage.limit ?? 0;
@@ -42,6 +46,7 @@ export default function Usage() {
 
   return (
     <div className="usage">
+      <h1 className="current__plan">Your current Plan is: <span>{plan}</span></h1>
       {limit !== null ? (
         <>
           <p className="usage_text">

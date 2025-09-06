@@ -30,7 +30,7 @@ export const signup = async (email: string, password: string, name: string) => {
     updatedAt: serverTimestamp(),
     usage: {
       monthlyGenerations: 0,
-      limit: 10,
+      limit: 36,
     },
     savedIdeas: [],
     searchHistory: [],

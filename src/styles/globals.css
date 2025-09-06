@@ -630,6 +630,21 @@ hr {
   cursor: pointer;
 }
 
+
+
+
+/* ==================== for the usage component  ================== */
+
+.current__plan {
+  font-size: 2rem;
+  margin: -5rem auto 5rem;
+  font-weight: 550;
+}
+
+.current__plan span {
+  color: var(--tertiary);
+}
+
 .usage {
   width: 50%;
   margin: 10rem;
