@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { auth, db } from "@/lib/firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function Profile() {
@@ -27,25 +27,42 @@ export default function Profile() {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          setName(docSnap.data().name);
-          setEmail(docSnap.data().email);
-          setProfilePhoto(docSnap.data().profilePhoto);
-          setPlan(docSnap.data().plan);
-          setBio(docSnap.data().bio);
-          setCompany(docSnap.data().company);
-          setIndustry(docSnap.data().industry);
-          setRole(docSnap.data().role);
-          setTeamSize(docSnap.data().teamSize);
+          // ✅ load existing profile data
+          const data = docSnap.data();
+          setName(data.name || user.displayName || "User");
+          setEmail(data.email || user.email);
+          setProfilePhoto(data.profilePhoto || user.photoURL || null);
+          setPlan(data.plan || "Free");
+          setBio(data.bio || "");
+          setCompany(data.company || "");
+          setIndustry(data.industry || "");
+          setRole(data.role || "");
+          setTeamSize(data.teamSize || "");
         } else {
+          // ❌ profile not found → create default doc so it persists
+          await setDoc(docRef, {
+            name: user.displayName || "User",
+            email: user.email,
+            profilePhoto: user.photoURL || null,
+            plan: "Free",
+            bio: "",
+            company: "",
+            industry: "",
+            role: "",
+            teamSize: "",
+          });
           setName(user.displayName || "User");
+          setEmail(user.email);
+          setProfilePhoto(user.photoURL || null);
+          setPlan("Free");
         }
         setIsLoaded(true);
       }
     });
+
     return () => unsubscribe();
   }, []);
 
-  
   // the function to persist the edited data to the database
   const handleSaveChanges = async () => {
     const user = auth.currentUser;
