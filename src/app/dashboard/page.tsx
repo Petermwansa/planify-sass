@@ -62,7 +62,7 @@ const Dashboard = () => {
       );
     }
   };
-  
+
   // 🔥 Fetch savedIdeas tied to logged-in user
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
@@ -96,7 +96,13 @@ const Dashboard = () => {
   const renderView = () => {
     switch (activeView) {
       case "ideas":
-        return <ContentIdeas ideas={ideas} toggleSaved={toggleSaved} />;
+        return (
+          <ContentIdeas
+            ideas={ideas}
+            toggleSaved={toggleSaved}
+            setActiveView={setActiveView} 
+          />
+        );
       case "saved":
         return (
           <SavedIdeasOnly savedIdeas={savedIdeas} toggleSaved={toggleSaved} />

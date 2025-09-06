@@ -44,7 +44,7 @@ export default function Profile() {
             name: user.displayName || "User",
             email: user.email,
             profilePhoto: user.photoURL || null,
-            plan: "Free",
+            plan: "",
             bio: "",
             company: "",
             industry: "",
