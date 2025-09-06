@@ -18,6 +18,7 @@ import {
   arrayRemove,
   setDoc,
   increment,
+  Timestamp,
 } from "firebase/firestore";
 
 // firebase
@@ -68,29 +69,50 @@ const Dashboard = () => {
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       if (!user) {
-        setSavedIdeas([]); // clear if logged out
+        setSavedIdeas([]);
         setLoading(false);
         return;
       }
 
       const userRef = doc(db, "users", user.uid);
 
-      const unsubscribeSnapshot = onSnapshot(userRef, (docSnap) => {
+      const unsubscribeSnapshot = onSnapshot(userRef, async (docSnap) => {
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setSavedIdeas(data.savedIdeas || []);
-          console.log("Fetched savedIdeas:", data.savedIdeas);
+
+          // Reset savedIdeas and usage if 30 days have passed
+          const lastReset = data?.usage?.lastReset?.toDate?.() || new Date(0);
+          const now = new Date();
+          const diffDays =
+            (now.getTime() - lastReset.getTime()) / (1000 * 60 * 60 * 24);
+
+          if (diffDays >= 30) {
+            await updateDoc(userRef, {
+              savedIdeas: [],
+              "usage.monthlyGenerations": 0,
+              "usage.lastReset": new Date(),
+            });
+            setSavedIdeas([]);
+            console.log("Saved ideas and monthly usage reset!");
+          } else {
+            setSavedIdeas(data.savedIdeas || []);
+          }
         } else {
           // initialize user doc if missing
-          setDoc(userRef, { savedIdeas: [] }, { merge: true });
+          await setDoc(
+            userRef,
+            {
+              savedIdeas: [],
+              usage: { monthlyGenerations: 0, lastReset: new Date() },
+            },
+            { merge: true }
+          );
           setSavedIdeas([]);
         }
         setLoading(false);
       });
-
       return () => unsubscribeSnapshot();
     });
-
     return () => unsubscribeAuth();
   }, []);
 
@@ -124,6 +146,7 @@ const Dashboard = () => {
                 const userRef = doc(db, "users", user.uid);
                 await updateDoc(userRef, {
                   "usage.monthlyGenerations": increment(generatedIdeas.length),
+                  "usage.lastReset": Timestamp.now(),
                 });
               }
             }}

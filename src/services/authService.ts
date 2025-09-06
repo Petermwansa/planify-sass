@@ -6,7 +6,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, getDoc, serverTimestamp, Timestamp } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
 // ---------- SIGN UP ----------
@@ -31,6 +31,8 @@ export const signup = async (email: string, password: string, name: string) => {
     usage: {
       monthlyGenerations: 0,
       limit: 36,
+      lastReset: Timestamp
+
     },
     savedIdeas: [],
     searchHistory: [],

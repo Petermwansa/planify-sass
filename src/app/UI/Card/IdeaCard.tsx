@@ -38,9 +38,9 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onToggleSaved }) => {
       </div>
       <hr />
 
-      <div className="mt-2 text-s text-gray-500">
+      {/* <div className="mt-2 text-s text-gray-500">
         Created: {new Date(idea.createdAt).toLocaleDateString()}
-      </div>
+      </div> */}
 
       <div className="flex justify-center mt-2">
         <button className="idea_button" onClick={() => onToggleSaved(idea.id)}>

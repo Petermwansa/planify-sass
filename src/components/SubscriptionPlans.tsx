@@ -6,41 +6,34 @@ const plans = [
     name: "Free",
     price: "$0",
     description: "Perfect for getting started with basic content tools.",
-    features: ["5 AI content ideas/month", "Basic support", "Limited access"],
-    buttonText: "Free ",
+    features: [
+      "24 AI content idea generations per month",
+      "Limited access to your saved Ideas",
+    ],
+    buttonText: "Purchase",
   },
   {
-    id: "starter",
-    name: "Starter",
-    price: "$25",
-    description: "Best for growing creators with more needs.",
+    id: "creator",
+    name: "Creator Pack",
+    price: "$50",
+    description: "Best for growing creators who want to create.",
     features: [
-      "50 AI content ideas/month",
-      "Priority support",
-      "Analytics tools",
+      "120 AI content idea generations per month",
+      "Limited access to your saved Ideas",
     ],
-    buttonText: "Starter",
-  },
-  {
-    id: "pro",
-    name: "Professional",
-    price: "$100",
-    description: "Best for growing creators with more needs.",
-    features: [
-      "50 AI content ideas/month",
-      "Priority support",
-      "Analytics tools",
-    ],
-    buttonText: "Pro",
+    buttonText: "Purchase",
   },
   {
     id: "agency",
     name: "Agency",
     price: "$250",
-    description: "For serious creators & agencies with high demands.",
-    features: ["Unlimited AI content", "Dedicated support", "Team access"],
-    buttonText: "Agency",
-  },
+    description: "Best for growing creators with more needs.",
+    features: [
+      "12 000 AI content idea generations per month",
+      "Limited access to your saved Ideas",
+    ],
+    buttonText: "Pro",
+  }
 ];
 
 const SubscriptionPlans = () => {
