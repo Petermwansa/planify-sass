@@ -17,6 +17,7 @@ import {
   arrayUnion,
   arrayRemove,
   setDoc,
+  increment,
 } from "firebase/firestore";
 
 // firebase
@@ -100,7 +101,7 @@ const Dashboard = () => {
           <ContentIdeas
             ideas={ideas}
             toggleSaved={toggleSaved}
-            setActiveView={setActiveView} 
+            setActiveView={setActiveView}
           />
         );
       case "saved":
@@ -114,9 +115,17 @@ const Dashboard = () => {
       case "multistepform":
         return (
           <MultiStepForm
-            onIdeasGenerated={(generatedIdeas: Idea[]) => {
+            onIdeasGenerated={async (generatedIdeas: Idea[]) => {
               setIdeas(generatedIdeas);
               setActiveView("ideas");
+
+              const user = auth.currentUser;
+              if (user) {
+                const userRef = doc(db, "users", user.uid);
+                await updateDoc(userRef, {
+                  "usage.monthlyGenerations": increment(generatedIdeas.length),
+                });
+              }
             }}
           />
         );

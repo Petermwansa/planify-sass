@@ -18,7 +18,7 @@ export const signup = async (email: string, password: string, name: string) => {
   await setDoc(doc(db, "users", user.uid), {
     name,
     email: user.email,
-    plan: "free",
+    plan: "Free",
     profilePhoto: "",
     bio: "",
     industry: "",
