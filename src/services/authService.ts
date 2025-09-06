@@ -6,17 +6,15 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { doc, setDoc, serverTimestamp} from "firebase/firestore";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
+// ---------- SIGN UP ----------
 export const signup = async (email: string, password: string, name: string) => {
-  const userCredential = await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const user = userCredential.user;
 
+  // Create a brand new document only at signup
   await setDoc(doc(db, "users", user.uid), {
     name,
     email: user.email,
@@ -39,17 +37,33 @@ export const signup = async (email: string, password: string, name: string) => {
   });
 };
 
-export const login = (email: string, password: string) =>
-  signInWithEmailAndPassword(auth, email, password);
+// ---------- LOGIN ----------
+export const login = async (email: string, password: string) => {
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+  const user = userCredential.user;
 
+  // Update last login time, but do not overwrite anything else
+  await setDoc(
+    doc(db, "users", user.uid),
+    { updatedAt: serverTimestamp() },
+    { merge: true }
+  );
+
+  return userCredential;
+};
+
+// ---------- GOOGLE LOGIN ----------
 export const googleLogin = async () => {
   const provider = new GoogleAuthProvider();
   const result = await signInWithPopup(auth, provider);
   const user = result.user;
 
-  await setDoc(
-    doc(db, "users", user.uid),
-    {
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    // If new user, create full profile
+    await setDoc(userRef, {
       name: user.displayName,
       email: user.email,
       profilePhoto: user.photoURL,
@@ -65,11 +79,25 @@ export const googleLogin = async () => {
       usage: { monthlyGenerations: 0, limit: 10 },
       savedIdeas: [],
       searchHistory: [],
-    },
-    { merge: true }
-  );
+    });
+  } else {
+    // If existing user, only update timestamp and basic info
+    await setDoc(
+      userRef,
+      {
+        name: user.displayName,
+        email: user.email,
+        profilePhoto: user.photoURL,
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true }
+    );
+  }
+
+  return result;
 };
 
+// ---------- LOGOUT ----------
 export const logout = async () => {
   try {
     await signOut(auth);
@@ -78,10 +106,11 @@ export const logout = async () => {
   }
 };
 
+// ---------- FORGOT PASSWORD ----------
 export const forgotPassword = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    return { success: true, message: "password reset email sent" };
+    return { success: true, message: "Password reset email sent" };
   } catch (error: any) {
     return { success: false, message: error.message };
   }
