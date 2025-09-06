@@ -6,22 +6,12 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import {
-  doc,
-  setDoc,
-  getDoc,
-  serverTimestamp,
-  Timestamp,
-} from "firebase/firestore";
+import { doc, setDoc, getDoc, serverTimestamp, Timestamp } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
 // ---------- SIGN UP ----------
 export const signup = async (email: string, password: string, name: string) => {
-  const userCredential = await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const user = userCredential.user;
 
   // Create a brand new document only at signup
@@ -40,8 +30,9 @@ export const signup = async (email: string, password: string, name: string) => {
     updatedAt: serverTimestamp(),
     usage: {
       monthlyGenerations: 0,
-      limit: 24,
-      lastReset: Timestamp,
+      limit: 36,
+      lastReset: Timestamp
+
     },
     savedIdeas: [],
     searchHistory: [],
@@ -50,11 +41,7 @@ export const signup = async (email: string, password: string, name: string) => {
 
 // ---------- LOGIN ----------
 export const login = async (email: string, password: string) => {
-  const userCredential = await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
+  const userCredential = await signInWithEmailAndPassword(auth, email, password);
   const user = userCredential.user;
 
   // Update last login time, but do not overwrite anything else
@@ -82,7 +69,7 @@ export const googleLogin = async () => {
       name: user.displayName,
       email: user.email,
       profilePhoto: user.photoURL,
-      plan: "Free",
+      plan: "free",
       bio: "",
       industry: "",
       company: "",
@@ -91,11 +78,7 @@ export const googleLogin = async () => {
       stripeCustomerId: "",
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
-      usage: {
-        monthlyGenerations: 0,
-        limit: 24,
-        lastReset: Timestamp,
-      },
+      usage: { monthlyGenerations: 0, limit: 10 },
       savedIdeas: [],
       searchHistory: [],
     });
