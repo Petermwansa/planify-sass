@@ -16,7 +16,7 @@ const plans = [
     id: "creator",
     name: "Creator Pack",
     price: "$50",
-    description: "Best for growing creators who want to create.",
+    description: "Best for growing creators who are just starting.",
     features: [
       "120 AI content idea generations per month",
       "Limited access to your saved Ideas",
@@ -24,15 +24,16 @@ const plans = [
     buttonText: "Purchase",
   },
   {
-    id: "agency",
-    name: "Agency",
+    id: "platinum",
+    name: "Platinum",
     price: "$250",
-    description: "Best for growing creators with more needs.",
+    description: "Best for agencies with a large number of clients.",
     features: [
       "12 000 AI content idea generations per month",
       "Limited access to your saved Ideas",
+      "Customer Support Services",
     ],
-    buttonText: "Pro",
+    buttonText: "Purchase",
   }
 ];
 
